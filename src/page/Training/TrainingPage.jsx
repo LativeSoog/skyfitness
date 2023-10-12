@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import * as S from './TrainingPage.style'
 export const TrainingPage = () => {
   return (
@@ -66,7 +67,9 @@ export const TrainingPage = () => {
               выбором направления и тренера, с которым тренировки принесут
               здоровье и радость!
             </S.RecordText>
-            <S.btnRecord>Записаться на тренировку</S.btnRecord>
+            <Link to={'/profile'}>
+              <S.btnRecord>Записаться на тренировку</S.btnRecord>
+            </Link>
           </S.Record>
           <S.PhoneImg src="/img/phone.svg" alt="phone" />
         </S.RecordBox>
