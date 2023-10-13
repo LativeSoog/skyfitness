@@ -78,8 +78,8 @@ export const Circle = styled.div`
   border-radius: 1202.287px;
   background: #c7e957;
   display: flex;
-  width: 40.076px;
-  height: 53.435px;
+  width: 45.6px;
+  height: 45.6px;
   padding: 10.687px;
   flex-direction: column;
   justify-content: center;
@@ -218,6 +218,7 @@ export const btnRecord = styled.button`
   margin-top: 34px;
   width: 275px;
   height: 52px;
+  border: none;
   :hover {
     background: #3f007d;
   }
