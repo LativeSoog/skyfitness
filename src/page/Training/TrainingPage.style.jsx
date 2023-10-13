@@ -125,6 +125,7 @@ export const YogaDirection = styled.div`
   margin-top: 22px;
   display: flex;
   gap: 168px;
+  margin-left: 25px;
   @media (max-width: 480px) {
     gap: 29px;
   }
@@ -218,7 +219,7 @@ export const btnRecord = styled.button`
   margin-top: 34px;
   width: 275px;
   height: 52px;
-  border: none;
+  border: 0;
   :hover {
     background: #3f007d;
   }
