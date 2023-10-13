@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import * as S from './style'
 
 export const ProfilePage = () => {
@@ -7,7 +8,9 @@ export const ProfilePage = () => {
   return (
     <S.Main>
       <S.Header>
-        <img src="img/logo-black.png" alt="logo" />
+        <Link to="/">
+          <img src="img/logo-black.png" alt="logo" />
+        </Link>
         <S.Personal>
           <img src="img/avatar.svg" alt="avatar" />
           <S.Name>Сергей</S.Name>
@@ -69,9 +72,15 @@ export const ProfilePage = () => {
       <S.CourseBlock>
         <S.Title>Мои курсы</S.Title>
         <S.CourseItems>
-          <S.Item src="img/card-yoga.png" alt="card-yoga" />
-          <S.Item src="img/card-stretching.png" alt="card-stretching" />
-          <S.Item src="img/card-bodyflex.png" alt="card-bodyflex" />
+          <Link to="/training-video">
+            <S.Item src="img/card-yoga.png" alt="card-yoga" />
+          </Link>
+          <Link to="/training-video">
+            <S.Item src="img/card-stretching.png" alt="card-stretching" />
+          </Link>
+          <Link to="/training-video">
+            <S.Item src="img/card-bodyflex.png" alt="card-bodyflex" />
+          </Link>
         </S.CourseItems>
       </S.CourseBlock>
     </S.Main>
