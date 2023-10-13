@@ -19,4 +19,12 @@ export const HeaderButton = styled.button`
   padding: 7px 16px;
   background-color: #140d40;
   color: #fff;
+
+  &:hover {
+    background-color: #2d1f79;
+  }
+
+  &:active {
+    background-color: #3b29a1;
+  }
 `
