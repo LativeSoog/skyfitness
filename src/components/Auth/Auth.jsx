@@ -134,6 +134,9 @@ export default function AuthPage({ isLoginMode = false }) {
                   Зарегистрироваться
                 </S.PrimaryButton>
               )}
+              <Link to="/login">
+                <p style={{ color: '#000' }}>Уже есть аккаунт? Войти</p>
+              </Link>
             </S.Buttons>
           </>
         )}
