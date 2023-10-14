@@ -6,18 +6,21 @@ import { ProfilePage } from './page/Profile/ProfilePage'
 import { SignUpPage } from './page/SignUp/SignUpPage'
 import { LoginPage } from './page/LogIn/LoginPage'
 import { TrainingVideoPage } from './page/TrainingVideo/TrainingVideoPage'
+import { ChangePasswordPage } from './page/ChangePassword/ChangePasswordPage'
+import { ChangeLoginPage } from './page/ChangeLogin/ChangeLoginPage'
 
 export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
-
       <Route index element={<MainPage />} />
       <Route path="/training" element={<TrainingPage />} />
       <Route path="/training-video" element={<TrainingVideoPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/password-change" element={<ChangePasswordPage />} />
+      <Route path="/login-change" element={<ChangeLoginPage />} />
     </Routes>
   )
 }
