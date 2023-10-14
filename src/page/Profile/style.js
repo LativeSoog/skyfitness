@@ -62,7 +62,6 @@ export const ButtonBlock = styled.div`
   flex-direction: column;
   padding-top: 20px;
   margin-bottom: 61px;
-  position: relative;
 `
 
 export const Button = styled.button`
@@ -170,4 +169,65 @@ export const Item = styled.img`
     width: 210px;
     height: 280px;
   }
+`
+
+export const Wrapper = styled.div``
+
+export const PopupWorkout = styled.div`
+  --modal-width: 444;
+  --modal-height: 626;
+  position: absolute;
+  left: calc(50% - (var(--modal-width) / 2));
+  top: calc(50% - (var(--modal-height) / 2));
+  box-sizing: border-box;
+  width: var(--modal-width);
+  min-height: var(--modal-height);
+  border-radius: 12px;
+  padding: 36px 54px 58px 54px;
+  border: 1px solid #d0cece;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+`
+
+export const TitleWorkout = styled.h2`
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 40px;
+`
+
+export const ListWorkout = styled.ul`
+  list-style-type: none;
+  overflow: auto;
+`
+
+export const WorkoutItem = styled.li`
+  border: 1px solid #000;
+  border-radius: 26px;
+  padding: 15px;
+  margin-bottom: 12px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  ${(props) =>
+    props.$active &&
+    `
+    color: #06B16E;
+    border: 1px solid #06B16E;
+    `}
+`
+export const WorkoutName = styled.h3`
+  font-size: 20px;
+  margin-bottom: 6px;
+`
+
+export const WorkoutImg = styled.img`
+  position: absolute;
+  top: 10px;
+  right: 15px;
+`
+
+export const WorkoutText = styled.p`
+  font-size: 16px;
 `

@@ -11,6 +11,7 @@ a:visited {
   text-decoration: none;
   font-family: 'StratosSkyeng', sans-serif;
   cursor: pointer;
+  color: inherit;
 }
 
 button {
