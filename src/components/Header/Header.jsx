@@ -5,7 +5,7 @@ export const Header = () => {
     <>
       <S.Header>
         <S.HeaderLogo>
-          <S.HeaderLogoImg src="/img/logo.svg" alt="logo" />
+          <S.HeaderLogoImg src="/img/logo-light.svg" alt="logo" />
         </S.HeaderLogo>
 
         <S.HeaderSectionButton>

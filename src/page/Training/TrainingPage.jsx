@@ -5,8 +5,8 @@ export const TrainingPage = () => {
     <>
       <S.MainScills>
         <S.Header>
-        <Link to={'/'}>
-          <img src="/img/logo-black.svg" alt="logo" />
+          <Link to={'/'}>
+            <img src="/img/logo-dark.svg" alt="logo" />
           </Link>
         </S.Header>
         <S.ScillCard>

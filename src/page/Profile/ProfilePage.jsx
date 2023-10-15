@@ -15,7 +15,7 @@ export const ProfilePage = () => {
       )}
       <S.Header>
         <Link to="/">
-          <img src="img/logo-black.png" alt="logo" />
+          <img src="img/logo-dark.svg" alt="logo" />
         </Link>
         <S.Personal>
           <img src="img/avatar.svg" alt="avatar" />
