@@ -21,7 +21,10 @@ export const MainPage = () => {
         </S.ContentDescription>
 
         <S.TrainingBlock>
-          <TrainingBlock urlImg="/img/training/training-1.png" link="/" />
+          <TrainingBlock
+            urlImg="/img/training/training-1.png"
+            link="/training"
+          />
           <TrainingBlock urlImg="/img/training/training-2.png" link="/" />
           <TrainingBlock urlImg="/img/training/training-3.png" link="/" />
           <TrainingBlock urlImg="/img/training/training-4.png" link="/" />

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Header = styled.div`
@@ -28,3 +29,5 @@ export const HeaderButton = styled.button`
     background-color: #3b29a1;
   }
 `
+
+export const HeaderButtonLink = styled(Link)``

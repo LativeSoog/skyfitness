@@ -15,7 +15,7 @@ export const ProfilePage = () => {
       )}
       <S.Header>
         <Link to="/">
-          <img src="img/logo-dark.svg" alt="logo" />
+          <img src="/img/logo-dark.svg" alt="logo" />
         </Link>
         <S.Personal>
           <img src="img/avatar.svg" alt="avatar" />
@@ -66,7 +66,7 @@ const NewLoginForm = ({ setNewLogin }) => {
   return (
     <S.PopupLogin>
       <S.LoginLogo>
-        <img width={220} height={35} src="img/logo-black.png" alt="logo" />
+        <img width={220} height={35} src="img/logo-dark.svg" alt="logo" />
       </S.LoginLogo>
       <S.Inputs>
         <S.TitleInput>Новый логин:</S.TitleInput>
@@ -81,7 +81,7 @@ const NewPasswordForm = ({ setNewPassword }) => {
   return (
     <S.PopupPassword>
       <S.LoginLogo>
-        <img width={220} height={35} src="img/logo-black.png" alt="logo" />
+        <img width={220} height={35} src="img/logo-dark.svg" alt="logo" />
       </S.LoginLogo>
       <S.Inputs>
         <S.TitleInput>Новый пароль:</S.TitleInput>

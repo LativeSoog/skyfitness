@@ -9,7 +9,9 @@ export const Header = () => {
         </S.HeaderLogo>
 
         <S.HeaderSectionButton>
-          <S.HeaderButton>Войти</S.HeaderButton>
+          <S.HeaderButtonLink to="/login">
+            <S.HeaderButton>Войти</S.HeaderButton>
+          </S.HeaderButtonLink>
         </S.HeaderSectionButton>
       </S.Header>
     </>
