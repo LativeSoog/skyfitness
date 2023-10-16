@@ -7,7 +7,7 @@ export const Header = () => {
   return (
     <>
       <S.Header>
-        <S.HeaderLogo>
+        <S.HeaderLogo to={'/'}>
           <S.HeaderLogoImg src="/img/logo-dark.svg" alt="logo" />
         </S.HeaderLogo>
         {exitForm && <ExitForm setExitForm={setExitForm} />}
@@ -35,7 +35,7 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
   return (
     <>
       <S.Header>
-        <S.HeaderLogo>
+        <S.HeaderLogo to={'/'}>
           <S.HeaderLogoImg src="/img/logo-light.svg" alt="logo" />
         </S.HeaderLogo>
         {exitForm && <ExitForm setExitForm={setExitForm} />}

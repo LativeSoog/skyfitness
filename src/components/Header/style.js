@@ -6,7 +6,7 @@ export const Header = styled.div`
   justify-content: space-between;
   padding-top: 30px;
 `
-export const HeaderLogo = styled.div``
+export const HeaderLogo = styled(Link)``
 
 export const HeaderLogoImg = styled.img``
 
