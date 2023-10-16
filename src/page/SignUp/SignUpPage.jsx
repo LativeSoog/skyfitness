@@ -1,13 +1,11 @@
-import React from "react";
-import * as S from "./styles";
-import AuthPage from "../../components/Auth/Auth";
+import React from 'react'
+import * as S from './styles'
+import AuthPage from '../../components/Auth/Auth'
 
-export const  SignUpPage = () => {
+export const SignUpPage = () => {
   return (
     <S.PageWrapper>
-        <AuthPage isLoginMode={false} />
+      <AuthPage isLoginMode={false} />
     </S.PageWrapper>
-  );
+  )
 }
-
-

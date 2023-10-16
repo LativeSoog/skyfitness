@@ -1,19 +1,7 @@
 import { styled } from 'styled-components'
 
 export const videoPage = styled.main`
-  box-sizing: border-box;
-  padding: 0 30px;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 94px;
-
-  @media (max-width: 768px) {
-    margin-bottom: 40px;
-  }
-  @media (max-width: 670px) {
-    margin-bottom: 20px;
-  }
+  padding-top: 75px;
 `
 export const videoPageWrap = styled.div`
   width: 100%;
@@ -355,6 +343,8 @@ export const progressBarStatPercentColorPurple = styled.div`
 // progress form
 export const progressFormWrap = styled.div`
   position: fixed;
+  left: 0;
+  top: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.9);

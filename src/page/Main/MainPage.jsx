@@ -1,13 +1,12 @@
-import { Header } from '../../components/Header/Header'
+import { HeaderPurple } from '../../components/Header/Header'
 import { TrainingBlock } from '../../components/TrainingBlock/TrainingBlock'
-import * as S from './style'
+import * as S from './styles'
 
 export const MainPage = () => {
   return (
     <S.Wrapper>
       <S.Container>
-        <Header />
-
+        <HeaderPurple />
         <S.ContentDescription>
           <S.ContentDescriptionPreTitle>
             Онлайн-тренировки для занятий дома

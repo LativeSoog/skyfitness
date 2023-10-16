@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import * as S from './TrainingVideo.style'
+import * as S from './styles'
 
 /* Проценты выполнения упражнений, в зависимости от процента меняется прогресс закрашиваемого процента автоматически 
   не знаю что делать для процента ниже 20 (дизайнер ничего не нарисовал =((((( )
@@ -21,65 +21,62 @@ export const TrainingVideoPage = () => {
   return (
     <S.videoPage>
       {progressForm && <ProgressForm setProgressForm={setProgressForm} />}
-      <S.videoPageWrap>
-        {/* Тут должна быть шапка */}
-        <S.videoPageTitle>Йога</S.videoPageTitle>
-        <S.breadcrumbs>
-          Красота и здоровье / Йога на каждый день / 2 день
-        </S.breadcrumbs>
+      <S.videoPageTitle>Йога</S.videoPageTitle>
+      <S.breadcrumbs>
+        Красота и здоровье / Йога на каждый день / 2 день
+      </S.breadcrumbs>
 
-        <S.video controls />
+      <S.video controls />
 
-        <S.exercise>
-          <S.exerciseWrap>
-            <S.exerciseText>Упражнения</S.exerciseText>
-            <S.exerciseLists>
-              <S.exerciseItem>Наклон вперед (10 повторений)</S.exerciseItem>
-              <S.exerciseItem>Наклон назад (10 повторений)</S.exerciseItem>
-              <S.exerciseItem>
-                Поднятие ног, согнутых в коленях (5&nbsp;повторений)
-              </S.exerciseItem>
-            </S.exerciseLists>
-            <S.fillProgress onClick={handleClickFillProgress}>
-              Заполнить свой прогресс
-            </S.fillProgress>
-          </S.exerciseWrap>
+      <S.exercise>
+        <S.exerciseWrap>
+          <S.exerciseText>Упражнения</S.exerciseText>
+          <S.exerciseLists>
+            <S.exerciseItem>Наклон вперед (10 повторений)</S.exerciseItem>
+            <S.exerciseItem>Наклон назад (10 повторений)</S.exerciseItem>
+            <S.exerciseItem>
+              Поднятие ног, согнутых в коленях (5&nbsp;повторений)
+            </S.exerciseItem>
+          </S.exerciseLists>
+          <S.fillProgress onClick={handleClickFillProgress}>
+            Заполнить свой прогресс
+          </S.fillProgress>
+        </S.exerciseWrap>
 
-          <S.progressBar>
-            <S.progressBarText>Мой прогресс по тренировке 2:</S.progressBarText>
-            <S.progressBarStats>
-              <S.progressBarStat>
-                <S.progressBarStatText>Наклоны вперед</S.progressBarStatText>
-                <S.progressBarStatPercentGreen>
-                  <S.progressBarStatPercentColorGreen
-                    $percent={progressPercent.forward}
-                  >{`${progressPercent.forward}%`}</S.progressBarStatPercentColorGreen>
-                </S.progressBarStatPercentGreen>
-              </S.progressBarStat>
+        <S.progressBar>
+          <S.progressBarText>Мой прогресс по тренировке 2:</S.progressBarText>
+          <S.progressBarStats>
+            <S.progressBarStat>
+              <S.progressBarStatText>Наклоны вперед</S.progressBarStatText>
+              <S.progressBarStatPercentGreen>
+                <S.progressBarStatPercentColorGreen
+                  $percent={progressPercent.forward}
+                >{`${progressPercent.forward}%`}</S.progressBarStatPercentColorGreen>
+              </S.progressBarStatPercentGreen>
+            </S.progressBarStat>
 
-              <S.progressBarStat>
-                <S.progressBarStatText>Наклоны назад</S.progressBarStatText>
-                <S.progressBarStatPercentOrange>
-                  <S.progressBarStatPercentColorOrange
-                    $percent={progressPercent.back}
-                  >{`${progressPercent.back}%`}</S.progressBarStatPercentColorOrange>
-                </S.progressBarStatPercentOrange>
-              </S.progressBarStat>
+            <S.progressBarStat>
+              <S.progressBarStatText>Наклоны назад</S.progressBarStatText>
+              <S.progressBarStatPercentOrange>
+                <S.progressBarStatPercentColorOrange
+                  $percent={progressPercent.back}
+                >{`${progressPercent.back}%`}</S.progressBarStatPercentColorOrange>
+              </S.progressBarStatPercentOrange>
+            </S.progressBarStat>
 
-              <S.progressBarStat>
-                <S.progressBarStatText>
-                  Поднятие ног, согнутых в коленях
-                </S.progressBarStatText>
-                <S.progressBarStatPercentPurple>
-                  <S.progressBarStatPercentColorPurple
-                    $percent={progressPercent.legs}
-                  >{`${progressPercent.legs}%`}</S.progressBarStatPercentColorPurple>
-                </S.progressBarStatPercentPurple>
-              </S.progressBarStat>
-            </S.progressBarStats>
-          </S.progressBar>
-        </S.exercise>
-      </S.videoPageWrap>
+            <S.progressBarStat>
+              <S.progressBarStatText>
+                Поднятие ног, согнутых в коленях
+              </S.progressBarStatText>
+              <S.progressBarStatPercentPurple>
+                <S.progressBarStatPercentColorPurple
+                  $percent={progressPercent.legs}
+                >{`${progressPercent.legs}%`}</S.progressBarStatPercentColorPurple>
+              </S.progressBarStatPercentPurple>
+            </S.progressBarStat>
+          </S.progressBarStats>
+        </S.progressBar>
+      </S.exercise>
     </S.videoPage>
   )
 }

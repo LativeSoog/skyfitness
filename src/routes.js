@@ -8,15 +8,18 @@ import { LoginPage } from './page/LogIn/LoginPage'
 import { TrainingVideoPage } from './page/TrainingVideo/TrainingVideoPage'
 import { ChangePasswordPage } from './page/ChangePassword/ChangePasswordPage'
 import { ChangeLoginPage } from './page/ChangeLogin/ChangeLoginPage'
+import { PageLayout } from './components/PageLayout/PageLayout'
 
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="*" element={<NotFoundPage />} />
       <Route index element={<MainPage />} />
-      <Route path="/training" element={<TrainingPage />} />
-      <Route path="/training-video" element={<TrainingVideoPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/" element={<PageLayout />}>
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/training" element={<TrainingPage />} />
+        <Route path="/training-video" element={<TrainingVideoPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Route>
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/password-change" element={<ChangePasswordPage />} />
