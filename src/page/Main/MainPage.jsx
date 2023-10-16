@@ -21,13 +21,30 @@ export const MainPage = () => {
 
         <S.TrainingBlock>
           <TrainingBlock
-            urlImg="/img/training/training-1.png"
+            urlImg="/img/card-course/card-yoga.jpeg"
             link="/training"
+            nameCourse="Йога"
           />
-          <TrainingBlock urlImg="/img/training/training-2.png" link="/" />
-          <TrainingBlock urlImg="/img/training/training-3.png" link="/" />
-          <TrainingBlock urlImg="/img/training/training-4.png" link="/" />
-          <TrainingBlock urlImg="/img/training/training-5.png" link="/" />
+          <TrainingBlock
+            urlImg="/img/card-course/card-stretching.jpeg"
+            link="/"
+            nameCourse="Стретчинг"
+          />
+          <TrainingBlock
+            urlImg="/img/card-course/card-dance.jpeg"
+            link="/"
+            nameCourse="Танцевальный фитнес"
+          />
+          <TrainingBlock
+            urlImg="/img/card-course/card-step-aero.jpeg"
+            link="/"
+            nameCourse="Степ-аэробика"
+          />
+          <TrainingBlock
+            urlImg="/img/card-course/card-bodyflex.jpeg"
+            link="/"
+            nameCourse="Бодифлекс"
+          />
         </S.TrainingBlock>
 
         <S.ContentFooter>

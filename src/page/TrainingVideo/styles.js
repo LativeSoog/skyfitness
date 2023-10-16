@@ -61,6 +61,7 @@ export const video = styled.video`
 `
 export const exercise = styled.div`
   margin-top: 45px;
+  padding-bottom: 95px;
   width: 100%;
   display: flex;
   gap: 60px;
