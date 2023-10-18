@@ -82,6 +82,10 @@ export const TextExit = styled.p`
   margin-top: 38px;
   text-align: center;
   margin-bottom: 35px;
+  & b {
+    color: #580ea2;
+    text-decoration: underline;
+  }
 `
 
 export const Button = styled.button`
