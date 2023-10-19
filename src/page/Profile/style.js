@@ -177,6 +177,7 @@ export const CourseItems = styled.div`
   gap: 40px;
   @media (max-width: 480px) {
     gap: 20px;
+    justify-content: center;
   }
 `
 

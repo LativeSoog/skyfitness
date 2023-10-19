@@ -8,7 +8,12 @@ export const Header = styled.div`
 `
 export const HeaderLogo = styled(Link)``
 
-export const HeaderLogoImg = styled.img``
+export const HeaderLogoImg = styled.img`
+@media (max-width: 480px) {
+	width: 150px;
+	height: 40px;
+}
+`
 
 export const HeaderSectionButton = styled.div``
 

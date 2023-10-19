@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
-  const { email } = useAuth()
+  const { email, login } = useAuth()
 
   return (
     <>
@@ -22,7 +22,7 @@ export const Header = () => {
         {isLogin ? (
           <S.Personal onClick={() => setExitForm(true)}>
             <img src="img/avatar.svg" alt="avatar" />
-            <S.Name>{email}</S.Name>
+            <S.Name>{login ? login : email}</S.Name>
             <img src="img/arrow-down.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
@@ -40,7 +40,7 @@ export const Header = () => {
 export const HeaderPurple = ({ nameColor = 'red' }) => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
-  const { email } = useAuth()
+  const { email, login } = useAuth()
   return (
     <>
       <S.Header>
@@ -51,7 +51,7 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
         {isLogin ? (
           <S.Personal onClick={() => setExitForm(true)}>
             <img src="img/avatar.svg" alt="avatar" />
-            <S.NameLight>{email}</S.NameLight>
+            <S.NameLight>{login ? login : email}</S.NameLight>
             <img src="img/arrow-down-light.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
@@ -68,7 +68,7 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
 
 const ExitForm = ({ setExitForm }) => {
   const dispatch = useDispatch()
-  const { email } = useAuth()
+  const { email, login } = useAuth()
   return (
     <S.BlackoutWrapper>
       <S.PopupLogin>
@@ -78,7 +78,7 @@ const ExitForm = ({ setExitForm }) => {
         <S.TextExit>
           Вы действительно хотите выйти из аккаунта:
           <Link to="/profile">
-            <b onClick={() => setExitForm(false)}>{email}</b>
+            <b onClick={() => setExitForm(false)}>{login ? login : email}</b>
           </Link>
           ?
         </S.TextExit>
