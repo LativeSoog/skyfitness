@@ -76,7 +76,7 @@ const ExitForm = ({ setExitForm }) => {
           <S.HeaderLogoImg src="/img/logo-dark.svg" alt="logo" />
         </S.HeaderLogo>
         <S.TextExit>
-          Вы действительно хотите выйти из аккаунта:
+          Вы действительно хотите выйти из аккаунта: <br />
           <Link to="/profile">
             <b onClick={() => setExitForm(false)}>{login ? login : email}</b>
           </Link>

@@ -9,10 +9,10 @@ export const Header = styled.div`
 export const HeaderLogo = styled(Link)``
 
 export const HeaderLogoImg = styled.img`
-@media (max-width: 480px) {
-	width: 150px;
-	height: 40px;
-}
+  @media (max-width: 480px) {
+    width: 150px;
+    height: 40px;
+  }
 `
 
 export const HeaderSectionButton = styled.div``
@@ -80,6 +80,9 @@ export const PopupLogin = styled.div`
   border-radius: 12px;
   padding: 33px 47px 47px 41px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export const TextExit = styled.p`

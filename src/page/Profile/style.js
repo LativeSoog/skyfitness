@@ -99,11 +99,34 @@ export const Button = styled.button`
   &:active {
     background-color: #271a58;
   }
+  &:disabled {
+    opacity: 0.5;
+  }
   @media (max-width: 480px) {
     font-size: 12px;
     width: 150px;
     height: 36px;
     padding: 0 15px;
+  }
+`
+
+export const WarningMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 275px;
+  height: 52px;
+  margin-bottom: 15px;
+  color: tomato;
+  border: 0;
+  border-radius: 46px;
+  border: 1px solid tomato;
+  @media (max-width: 480px) {
+    text-align: center;
+    font-size: 12px;
+    width: 150px;
+    height: 36px;
+    padding: 0 10px;
   }
 `
 
@@ -120,6 +143,9 @@ export const PopupLogin = styled.div`
   border-radius: 12px;
   padding: 33px 47px 47px 41px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export const Inputs = styled.div`
@@ -164,7 +190,7 @@ export const Input = styled.input`
 `
 
 export const PopupPassword = styled(PopupLogin)`
-  height: 401px;
+  height: 481px;
 `
 
 export const CourseBlock = styled.div`

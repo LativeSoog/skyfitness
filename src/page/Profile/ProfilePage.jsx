@@ -122,6 +122,7 @@ const NewLoginForm = ({ setOpenEditLogin }) => {
 
 const OldPasswordForm = ({ setOpenFormOldPassword, setOpenEditPassword }) => {
   const [oldPass, setOldPass] = React.useState('')
+  const [errorPassword, setErrorPassword] = React.useState(false)
 
   const checkOldPassword = () => {
     const auth = getAuth()
@@ -136,13 +137,13 @@ const OldPasswordForm = ({ setOpenFormOldPassword, setOpenEditPassword }) => {
         setOpenEditPassword(true)
       })
       .catch((error) => {
-        alert('Пароль неверный!')
+        setErrorPassword(true)
       })
   }
 
   return (
     <S.BlackoutWrapper>
-      <S.PopupPassword>
+      <S.PopupLogin>
         <S.LoginLogo>
           <img width={220} height={35} src="img/logo-dark.svg" alt="logo" />
         </S.LoginLogo>
@@ -155,8 +156,22 @@ const OldPasswordForm = ({ setOpenFormOldPassword, setOpenEditPassword }) => {
             onChange={(e) => setOldPass(e.target.value)}
           />
         </S.Inputs>
-        <S.Button onClick={() => checkOldPassword()}>Далее</S.Button>
-      </S.PopupPassword>
+        {errorPassword && (
+          <p
+            style={{
+              color: 'tomato',
+              marginTop: '-20px',
+              marginBottom: '10px',
+            }}
+          >
+            Неверный пароль
+          </p>
+        )}
+        <S.Button disabled={!oldPass} onClick={() => checkOldPassword()}>
+          Далее
+        </S.Button>
+        <S.Button onClick={() => setOpenFormOldPassword(false)}>Назад</S.Button>
+      </S.PopupLogin>
     </S.BlackoutWrapper>
   )
 }
@@ -202,12 +217,16 @@ const NewPasswordForm = ({ setOpenEditPassword }) => {
           />
         </S.Inputs>
         {newPass !== repeatNewPass ? (
-          <b style={{ color: 'tomato', marginTop: '5px' }}>
-            Пароли должны совпадать
-          </b>
+          <S.WarningMessage>Пароли не совпадают</S.WarningMessage>
         ) : (
-          <S.Button onClick={() => saveNewPassword()}>Сохранить</S.Button>
+          <S.Button
+            disabled={!newPass && !repeatNewPass}
+            onClick={() => saveNewPassword()}
+          >
+            Сохранить
+          </S.Button>
         )}
+        <S.Button onClick={() => setOpenEditPassword(false)}>Закрыть</S.Button>
       </S.PopupPassword>
     </S.BlackoutWrapper>
   )
