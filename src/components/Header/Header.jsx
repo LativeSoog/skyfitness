@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import * as S from './style'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/use-auth'
 import { removeUser } from '../../store/slices/userSlice'
 import { useDispatch } from 'react-redux'
+import { getAuth, signOut } from 'firebase/auth'
+import { auth } from '../../firebase'
 
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -22,7 +24,7 @@ export const Header = () => {
         {isLogin ? (
           <S.Personal onClick={() => setExitForm(true)}>
             <img src="img/avatar.svg" alt="avatar" />
-            <S.Name>{email}</S.Name>
+            <S.Name>{JSON.parse(localStorage.getItem('user')).email}</S.Name>
             <img src="img/arrow-down.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
@@ -41,6 +43,7 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
   const { email } = useAuth()
+
   return (
     <>
       <S.Header>
@@ -69,6 +72,17 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
 const ExitForm = ({ setExitForm }) => {
   const dispatch = useDispatch()
   const { email } = useAuth()
+  let navigate = useNavigate()
+  const auth = getAuth()
+
+  const logout = async () => {
+    try {
+      await signOut(auth)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   return (
     <S.BlackoutWrapper>
       <S.PopupLogin>
@@ -78,11 +92,22 @@ const ExitForm = ({ setExitForm }) => {
         <S.TextExit>
           Вы действительно хотите выйти из аккаунта:
           <Link to="/profile">
-            <b onClick={() => setExitForm(false)}>{email}</b>
+            <b onClick={() => setExitForm(false)}>
+              {JSON.parse(localStorage.getItem('user')).email}
+            </b>
           </Link>
           ?
         </S.TextExit>
-        <S.Button onClick={() => dispatch(removeUser())}>Выйти</S.Button>
+        <S.Button
+          onClick={() => {
+            logout()
+            dispatch(removeUser())
+            localStorage.removeItem('user')
+            navigate('/login')
+          }}
+        >
+          Выйти
+        </S.Button>
         <S.Button onClick={() => setExitForm(false)}>Назад</S.Button>
       </S.PopupLogin>
     </S.BlackoutWrapper>
