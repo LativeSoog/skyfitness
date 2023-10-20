@@ -40,7 +40,7 @@ export const ProfilePage = () => {
         <S.InfoBlock>
           <S.TextInfo>Логин: {login ? login : email}</S.TextInfo>
           <S.TextInfo>
-            Пароль: {password ? password : 'пароль скрыт'}
+            Пароль: {password ? password : '●●●●●●●'}
           </S.TextInfo>
         </S.InfoBlock>
         <S.ButtonBlock>
@@ -114,7 +114,7 @@ const NewLoginForm = ({ setOpenEditLogin }) => {
             onChange={(e) => setNewLog(e.target.value)}
           />
         </S.Inputs>
-        <S.Button onClick={() => saveNewLogin()}>Сохранить</S.Button>
+        <S.Button disabled={!newLog.trim()} onClick={() => saveNewLogin()}>Сохранить</S.Button>
       </S.PopupLogin>
     </S.BlackoutWrapper>
   )
@@ -167,7 +167,7 @@ const OldPasswordForm = ({ setOpenFormOldPassword, setOpenEditPassword }) => {
             Неверный пароль
           </p>
         )}
-        <S.Button disabled={!oldPass} onClick={() => checkOldPassword()}>
+        <S.Button disabled={!oldPass.trim()} onClick={() => checkOldPassword()}>
           Далее
         </S.Button>
         <S.Button onClick={() => setOpenFormOldPassword(false)}>Назад</S.Button>
@@ -220,7 +220,7 @@ const NewPasswordForm = ({ setOpenEditPassword }) => {
           <S.WarningMessage>Пароли не совпадают</S.WarningMessage>
         ) : (
           <S.Button
-            disabled={!newPass && !repeatNewPass}
+            disabled={!newPass.trim() && !repeatNewPass.trim()}
             onClick={() => saveNewPassword()}
           >
             Сохранить
