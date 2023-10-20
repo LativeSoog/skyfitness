@@ -8,7 +8,12 @@ export const Header = styled.div`
 `
 export const HeaderLogo = styled(Link)``
 
-export const HeaderLogoImg = styled.img``
+export const HeaderLogoImg = styled.img`
+  @media (max-width: 480px) {
+    width: 150px;
+    height: 40px;
+  }
+`
 
 export const HeaderSectionButton = styled.div``
 
@@ -75,6 +80,9 @@ export const PopupLogin = styled.div`
   border-radius: 12px;
   padding: 33px 47px 47px 41px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export const TextExit = styled.p`
@@ -82,6 +90,10 @@ export const TextExit = styled.p`
   margin-top: 38px;
   text-align: center;
   margin-bottom: 35px;
+  & b {
+    color: #580ea2;
+    text-decoration: underline;
+  }
 `
 
 export const Button = styled.button`
