@@ -1,15 +1,31 @@
 import { HeaderPurple } from '../../components/Header/Header'
 import { TrainingBlock } from '../../components/TrainingBlock/TrainingBlock'
+import { MainPageSkeleton } from '../../components/Skeletons/MainPageSkeleton';
+import { useState, useEffect } from 'react';
 import * as S from './styles'
 
+
 export const MainPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const handleClickGoToUp = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     })
   }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+  
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
+    <>
+    {isLoading ? (
+      <MainPageSkeleton />
+    ) : (
     <S.Wrapper>
       <S.Container>
         <HeaderPurple />
@@ -60,5 +76,7 @@ export const MainPage = () => {
         </S.ContentFooter>
       </S.Container>
     </S.Wrapper>
+     )}
+     </>
   )
 }
