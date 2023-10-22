@@ -1,11 +1,18 @@
 import { styled } from 'styled-components'
 
 export const videoPage = styled.main`
-  padding-top: 75px;
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @media (max-width: 670px) {
+    margin-top: 25px;
+    gap: 20px;
+  }
 `
 export const videoPageWrap = styled.div`
   width: 100%;
-  max-width: 1160px;
   display: flex;
   gap: 40px;
   align-items: center;
@@ -61,7 +68,6 @@ export const video = styled.video`
 `
 export const exercise = styled.div`
   margin-top: 45px;
-  padding-bottom: 95px;
   width: 100%;
   display: flex;
   gap: 60px;
@@ -70,7 +76,7 @@ export const exercise = styled.div`
   @media (max-width: 1280px) and (min-width: 1000px) {
     gap: 30px;
   }
-  @media (max-width: 1000px) {
+  @media (max-width: 1140px) {
     flex-wrap: wrap;
   }
   @media (max-width: 670px) {
@@ -184,7 +190,7 @@ export const progressBar = styled.section`
     gap: 20px;
     padding: 20px 30px;
   }
-  @media (max-width: 1000px) {
+  @media (max-width: 1140px) {
     width: 100%;
   }
   @media (max-width: 670px) {

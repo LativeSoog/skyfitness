@@ -3,10 +3,14 @@ import styled from 'styled-components'
 
 export const Header = styled.div`
   display: flex;
+  width: 100%;
+  max-width: 1160px;
   justify-content: space-between;
   padding-top: 30px;
 `
-export const HeaderLogo = styled(Link)``
+export const HeaderLogo = styled(Link)`
+  display: flex;
+`
 
 export const HeaderLogoImg = styled.img`
   @media (max-width: 480px) {
@@ -40,18 +44,22 @@ export const HeaderButtonLink = styled(Link)``
 export const Personal = styled.div`
   display: flex;
   align-items: center;
+  gap: 15px;
   cursor: pointer;
 `
 
 export const Name = styled.p`
-  margin-left: 15px;
-  margin-right: 12px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 export const NameLight = styled.p`
   color: #fff;
-  margin-left: 15px;
-  margin-right: 12px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 export const BlackoutWrapper = styled.div`
