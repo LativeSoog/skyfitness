@@ -22,27 +22,27 @@ export const MainPage = () => {
         <S.TrainingBlock>
           <TrainingBlock
             urlImg="/img/card-course/card-yoga.jpeg"
-            link="/training"
+            link="/courses/yoga1"
             nameCourse="Йога"
           />
           <TrainingBlock
             urlImg="/img/card-course/card-stretching.jpeg"
-            link="/"
+            link="/courses/stretching1"
             nameCourse="Стретчинг"
           />
           <TrainingBlock
             urlImg="/img/card-course/card-dance.jpeg"
-            link="/"
+            link="/courses/dance1"
             nameCourse="Танцевальный фитнес"
           />
           <TrainingBlock
             urlImg="/img/card-course/card-step-aero.jpeg"
-            link="/"
+            link="/courses/step1"
             nameCourse="Степ-аэробика"
           />
           <TrainingBlock
             urlImg="/img/card-course/card-bodyflex.jpeg"
-            link="/"
+            link="/courses/bodyflex1"
             nameCourse="Бодифлекс"
           />
         </S.TrainingBlock>

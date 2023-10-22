@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import * as S from './styles'
-export const TrainingPage = () => {
+export const TrainingPage = ({courses}) => {
   return (
     <>
       <S.ScillCard>

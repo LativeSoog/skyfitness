@@ -10,13 +10,16 @@ import { ChangePasswordPage } from './page/ChangePassword/ChangePasswordPage'
 import { ChangeLoginPage } from './page/ChangeLogin/ChangeLoginPage'
 import { PageLayout } from './components/PageLayout/PageLayout'
 
-export const AppRoutes = () => {
+export const AppRoutes = ({ courses }) => {
   return (
     <Routes>
       <Route index element={<MainPage />} />
       <Route path="/" element={<PageLayout />}>
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/training" element={<TrainingPage />} />
+        <Route
+          path="/courses/:id"
+          element={<TrainingPage courses={courses} />}
+        />
         <Route path="/training-video" element={<TrainingVideoPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
