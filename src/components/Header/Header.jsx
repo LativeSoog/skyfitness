@@ -10,7 +10,7 @@ import { auth } from '../../firebase'
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
-  const { email } = useAuth()
+  const { email, login } = useAuth()
 
   return (
     <>
@@ -24,7 +24,7 @@ export const Header = () => {
         {isLogin ? (
           <S.Personal onClick={() => setExitForm(true)}>
             <img src="img/avatar.svg" alt="avatar" />
-            <S.Name>{JSON.parse(localStorage.getItem('user')).email}</S.Name>
+            <S.Name>{login ? login : JSON.parse(localStorage.getItem('user')).email}</S.Name>
             <img src="img/arrow-down.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
@@ -42,8 +42,8 @@ export const Header = () => {
 export const HeaderPurple = ({ nameColor = 'red' }) => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
-  const { email } = useAuth()
-
+  const { email, login } = useAuth()
+  
   return (
     <>
       <S.Header>
@@ -54,7 +54,7 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
         {isLogin ? (
           <S.Personal onClick={() => setExitForm(true)}>
             <img src="img/avatar.svg" alt="avatar" />
-            <S.NameLight>{email}</S.NameLight>
+            <S.NameLight>{login ? login : email}</S.NameLight>
             <img src="img/arrow-down-light.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
@@ -71,7 +71,8 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
 
 const ExitForm = ({ setExitForm }) => {
   const dispatch = useDispatch()
-  const { email } = useAuth()
+
+  const { email, login } = useAuth()
   let navigate = useNavigate()
   const auth = getAuth()
 
@@ -90,11 +91,9 @@ const ExitForm = ({ setExitForm }) => {
           <S.HeaderLogoImg src="/img/logo-dark.svg" alt="logo" />
         </S.HeaderLogo>
         <S.TextExit>
-          Вы действительно хотите выйти из аккаунта:
+          Вы действительно хотите выйти из аккаунта: <br />
           <Link to="/profile">
-            <b onClick={() => setExitForm(false)}>
-              {JSON.parse(localStorage.getItem('user')).email}
-            </b>
+            <b onClick={() => setExitForm(false)}>{login ? login : {JSON.parse(localStorage.getItem('user')).email}}</b>
           </Link>
           ?
         </S.TextExit>
