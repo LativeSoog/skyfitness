@@ -24,7 +24,9 @@ export const Header = () => {
         {isLogin ? (
           <S.Personal onClick={() => setExitForm(true)}>
             <img src="img/avatar.svg" alt="avatar" />
-            <S.Name>{login ? login : JSON.parse(localStorage.getItem('user')).email}</S.Name>
+            <S.Name>
+              {login ? login : JSON.parse(localStorage.getItem('user')).email}
+            </S.Name>
             <img src="img/arrow-down.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
@@ -43,7 +45,7 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
   const { email, login } = useAuth()
-  
+
   return (
     <>
       <S.Header>
@@ -93,7 +95,9 @@ const ExitForm = ({ setExitForm }) => {
         <S.TextExit>
           Вы действительно хотите выйти из аккаунта: <br />
           <Link to="/profile">
-            <b onClick={() => setExitForm(false)}>{login ? login : {JSON.parse(localStorage.getItem('user')).email}}</b>
+            <b onClick={() => setExitForm(false)}>
+              {login ? login : JSON.parse(localStorage.getItem('user')).email}
+            </b>
           </Link>
           ?
         </S.TextExit>
