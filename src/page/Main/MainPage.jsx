@@ -1,31 +1,40 @@
 import { HeaderPurple } from '../../components/Header/Header'
 import { TrainingBlock } from '../../components/TrainingBlock/TrainingBlock'
-import { MainPageSkeleton } from '../../components/Skeletons/MainPageSkeleton';
-import { useState, useEffect } from 'react';
+import { HeaderSkeleton } from '../../components/Skeletons/HeaderSkeleton';
+import { TrainingBlockSkeleton } from '../../components/Skeletons/TrainingBlockSkeleton';
 import * as S from './styles'
+import React from 'react'
 
 
 export const MainPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const skeletonBlocks = Array(5).fill().map((_, index) => <TrainingBlockSkeleton key={index} />)
   const handleClickGoToUp = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     })
   }
-  useEffect(() => {
+  React.useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1200);
+    }, 1100);
   
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-    {isLoading ? (
-      <MainPageSkeleton />
-    ) : (
+    {isLoading ? ( 
+     <S.Wrapper>
+    <S.Container>
+        <HeaderSkeleton/>
+        <S.TrainingBlock style={{marginTop: '160px'}}>
+        {skeletonBlocks}
+        </S.TrainingBlock>
+        </S.Container>
+        </S.Wrapper>
+    ) : ( 
     <S.Wrapper>
       <S.Container>
         <HeaderPurple />
