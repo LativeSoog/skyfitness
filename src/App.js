@@ -5,7 +5,7 @@ import { getCourses } from './api'
 
 function App() {
   const [courses, setCourses] = useState({})
-
+  
   useEffect(() => {
     getCourses()
       .then((courses) => {

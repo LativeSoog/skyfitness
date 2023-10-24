@@ -13,7 +13,7 @@ import { PageLayout } from './components/PageLayout/PageLayout'
 export const AppRoutes = ({ courses }) => {
   return (
     <Routes>
-      <Route index element={<MainPage />} />
+      <Route index element={<MainPage courses={courses}/>} />
       <Route path="/" element={<PageLayout />}>
         <Route path="*" element={<NotFoundPage />} />
         <Route

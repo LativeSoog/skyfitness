@@ -2,7 +2,7 @@ import { HeaderPurple } from '../../components/Header/Header'
 import { TrainingBlock } from '../../components/TrainingBlock/TrainingBlock'
 import * as S from './styles'
 
-export const MainPage = () => {
+export const MainPage = ({ courses }) => {
   return (
     <S.Wrapper>
       <S.Container>
@@ -18,35 +18,9 @@ export const MainPage = () => {
             <S.ContentDescriptionImg src="/img/sale-sticker.png" />
           </S.ContentDescriptionTitleImg>
         </S.ContentDescription>
-
         <S.TrainingBlock>
-          <TrainingBlock
-            urlImg="/img/card-course/card-yoga.jpeg"
-            link="/courses/yoga1"
-            nameCourse="Йога"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-stretching.jpeg"
-            link="/courses/stretching1"
-            nameCourse="Стретчинг"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-dance.jpeg"
-            link="/courses/dance1"
-            nameCourse="Танцевальный фитнес"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-step-aero.jpeg"
-            link="/courses/step1"
-            nameCourse="Степ-аэробика"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-bodyflex.jpeg"
-            link="/courses/bodyflex1"
-            nameCourse="Бодифлекс"
-          />
+          <TrainingBlock courses={courses} />
         </S.TrainingBlock>
-
         <S.ContentFooter>
           <S.ContentFooterButton>Наверх &#8593;</S.ContentFooterButton>
         </S.ContentFooter>

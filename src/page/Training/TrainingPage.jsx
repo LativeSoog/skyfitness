@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { getCourses } from '../../api'
+import { setCourses } from '../../store/coursesSlice'
 import * as S from './styles'
 export const TrainingPage = ({ courses }) => {
-  console.log(Object.keys(courses))
+  const param = useParams()
+  const { data, description, id } = getCourses({ id: param.id })
+  console.log(setCourses({ id: param.id }))
   return (
     <>
       <S.ScillCard>
