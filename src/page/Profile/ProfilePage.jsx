@@ -18,6 +18,20 @@ export const ProfilePage = () => {
   const [openWorkoutSelection, setOpenWorkoutSelection] = React.useState(false)
   const { email, login, password } = useAuth()
 
+  const handleClickEditLogin = () => {
+    document.body.style.overflow = 'hidden'
+    setOpenEditLogin(true)
+  }
+  const handleClickEditPassword = () => {
+    document.body.style.overflow = 'hidden'
+    setOpenFormOldPassword(true)
+  }
+
+  const handleClickGreenButton = () => {
+    document.body.style.overflow = 'hidden'
+    setOpenWorkoutSelection(true)
+  }
+
   return (
     <>
       {openEditLogin && <NewLoginForm setOpenEditLogin={setOpenEditLogin} />}
@@ -39,47 +53,48 @@ export const ProfilePage = () => {
         <S.Title>Мой профиль</S.Title>
         <S.InfoBlock>
           <S.TextInfo>Логин: {login ? login : email}</S.TextInfo>
-          <S.TextInfo>
-            Пароль: {password ? password : '●●●●●●●'}
-          </S.TextInfo>
+          <S.TextInfo>Пароль: {password ? password : '●●●●●●●●'}</S.TextInfo>
         </S.InfoBlock>
         <S.ButtonBlock>
-          <S.Button onClick={() => setOpenEditLogin(true)}>
+          <S.Button onClick={handleClickEditLogin}>
             Редактировать логин
           </S.Button>
-          <S.Button onClick={() => setOpenFormOldPassword(true)}>
+          <S.Button onClick={handleClickEditPassword}>
             Редактировать пароль
           </S.Button>
         </S.ButtonBlock>
       </S.ProfileBlock>
+
       <S.CourseBlock>
         <S.Title>Мои курсы</S.Title>
         <S.CourseItems>
           <S.Item>
             <S.ItemImg src="img/card-course/card-yoga.jpeg" alt="card-yoga" />
             <S.ItemTitle>Йога</S.ItemTitle>
-            <S.GreenButton onClick={() => setOpenWorkoutSelection(true)}>
-              Перейти →
+            <S.GreenButton onClick={handleClickGreenButton}>
+              Перейти
             </S.GreenButton>
           </S.Item>
+
           <S.Item>
             <S.ItemImg
               src="img/card-course/card-stretching.jpeg"
               alt="card-yoga"
             />
             <S.ItemTitle>Стретчинг</S.ItemTitle>
-            <S.GreenButton onClick={() => setOpenWorkoutSelection(true)}>
-              Перейти →
+            <S.GreenButton onClick={handleClickGreenButton}>
+              Перейти
             </S.GreenButton>
           </S.Item>
+
           <S.Item>
             <S.ItemImg
               src="img/card-course/card-bodyflex.jpeg"
               alt="card-yoga"
             />
             <S.ItemTitle>Бодифлекс</S.ItemTitle>
-            <S.GreenButton onClick={() => setOpenWorkoutSelection(true)}>
-              Перейти →
+            <S.GreenButton onClick={handleClickGreenButton}>
+              Перейти
             </S.GreenButton>
           </S.Item>
         </S.CourseItems>
@@ -99,9 +114,27 @@ const NewLoginForm = ({ setOpenEditLogin }) => {
     setOpenEditLogin(false)
   }
 
+  const closeWindow = () => {
+    document.body.style.overflow = null
+    setOpenEditLogin(false)
+  }
+
+  const handleClickSaveLogin = () => {
+    document.body.style.overflow = null
+    saveNewLogin()
+  }
+
+  const handleClickBlackout = () => {
+    closeWindow()
+  }
+  const handleClickForm = (event) => {
+    event.stopPropagation()
+  }
+
   return (
-    <S.BlackoutWrapper>
-      <S.PopupLogin>
+    <S.BlackoutWrapper onClick={handleClickBlackout}>
+      <S.PopupLogin onClick={(event) => handleClickForm(event)}>
+        <S.closeWindow src="/img/close.svg" onClick={closeWindow} />
         <S.LoginLogo>
           <img width={220} height={35} src="img/logo-dark.svg" alt="logo" />
         </S.LoginLogo>
@@ -114,7 +147,9 @@ const NewLoginForm = ({ setOpenEditLogin }) => {
             onChange={(e) => setNewLog(e.target.value)}
           />
         </S.Inputs>
-        <S.Button disabled={!newLog.trim()} onClick={() => saveNewLogin()}>Сохранить</S.Button>
+        <S.Button disabled={!newLog.trim()} onClick={handleClickSaveLogin}>
+          Сохранить
+        </S.Button>
       </S.PopupLogin>
     </S.BlackoutWrapper>
   )
@@ -141,9 +176,22 @@ const OldPasswordForm = ({ setOpenFormOldPassword, setOpenEditPassword }) => {
       })
   }
 
+  const closeWindow = () => {
+    document.body.style.overflow = null
+    setOpenFormOldPassword(false)
+  }
+
+  const handleClickBlackout = () => {
+    closeWindow()
+  }
+  const handleClickForm = (event) => {
+    event.stopPropagation()
+  }
+
   return (
-    <S.BlackoutWrapper>
-      <S.PopupLogin>
+    <S.BlackoutWrapper onClick={handleClickBlackout}>
+      <S.PopupLogin onClick={(event) => handleClickForm(event)}>
+        <S.closeWindow src="/img/close.svg" onClick={closeWindow} />
         <S.LoginLogo>
           <img width={220} height={35} src="img/logo-dark.svg" alt="logo" />
         </S.LoginLogo>
@@ -170,7 +218,6 @@ const OldPasswordForm = ({ setOpenFormOldPassword, setOpenEditPassword }) => {
         <S.Button disabled={!oldPass.trim()} onClick={() => checkOldPassword()}>
           Далее
         </S.Button>
-        <S.Button onClick={() => setOpenFormOldPassword(false)}>Назад</S.Button>
       </S.PopupLogin>
     </S.BlackoutWrapper>
   )
@@ -187,6 +234,7 @@ const NewPasswordForm = ({ setOpenEditPassword }) => {
 
     updatePassword(user, newPass)
       .then(() => {
+        document.body.style.overflow = null
         dispatch(setNewPassword(newPass))
         setOpenEditPassword(false)
         console.log('Пароль успешно изменен')
@@ -195,9 +243,23 @@ const NewPasswordForm = ({ setOpenEditPassword }) => {
         console.log('Ошибка при смене пароля')
       })
   }
+
+  const closeWindow = () => {
+    document.body.style.overflow = null
+    setOpenEditPassword(false)
+  }
+
+  const handleClickBlackout = () => {
+    closeWindow()
+  }
+  const handleClickForm = (event) => {
+    event.stopPropagation()
+  }
+
   return (
-    <S.BlackoutWrapper>
-      <S.PopupPassword>
+    <S.BlackoutWrapper onClick={handleClickBlackout}>
+      <S.PopupPassword onClick={(event) => handleClickForm(event)}>
+        <S.closeWindow src="/img/close.svg" onClick={closeWindow} />
         <S.LoginLogo>
           <img width={220} height={35} src="img/logo-dark.svg" alt="logo" />
         </S.LoginLogo>
@@ -226,18 +288,32 @@ const NewPasswordForm = ({ setOpenEditPassword }) => {
             Сохранить
           </S.Button>
         )}
-        <S.Button onClick={() => setOpenEditPassword(false)}>Закрыть</S.Button>
       </S.PopupPassword>
     </S.BlackoutWrapper>
   )
 }
 
 const WorkoutSelectionForm = ({ setOpenWorkoutSelection }) => {
+  const closeWindow = () => {
+    document.body.style.overflow = null
+    setOpenWorkoutSelection(false)
+  }
+
+  const handleClickBlackout = () => {
+    closeWindow()
+  }
+  const handleClickForm = (event) => {
+    event.stopPropagation()
+  }
+  const handleClickLink = () => {
+    document.body.style.overflow = null
+  }
   return (
-    <S.BlackoutWrapper>
-      <S.PopupWorkout>
+    <S.BlackoutWrapper onClick={handleClickBlackout}>
+      <S.PopupWorkout onClick={(event) => handleClickForm(event)}>
+        <S.closeWindow src="/img/close.svg" onClick={closeWindow} />
         <S.TitleWorkout>Выберите тренировку</S.TitleWorkout>
-        <Link to="/training-video">
+        <Link onClick={handleClickLink} to="/training-video">
           <S.ListWorkout>
             <S.WorkoutItem $active>
               <S.WorkoutName>Утренняя практика</S.WorkoutName>
@@ -263,9 +339,6 @@ const WorkoutSelectionForm = ({ setOpenWorkoutSelection }) => {
             </S.WorkoutItem>
           </S.ListWorkout>
         </Link>
-        <S.Button onClick={() => setOpenWorkoutSelection(false)}>
-          Назад
-        </S.Button>
       </S.PopupWorkout>
     </S.BlackoutWrapper>
   )

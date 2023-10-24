@@ -89,6 +89,11 @@ const ExitForm = ({ setExitForm }) => {
     event.stopPropagation()
   }
 
+  const handleClickLogout = () => {
+    document.body.style.overflow = null
+    dispatch(removeUser())
+  }
+
   return (
     <S.BlackoutWrapper onClick={closeWindow}>
       <S.PopupLogin onClick={(event) => handleClickForm(event)}>
@@ -103,7 +108,7 @@ const ExitForm = ({ setExitForm }) => {
           </Link>
           ?
         </S.TextExit>
-        <S.Button onClick={() => dispatch(removeUser())}>Выйти</S.Button>
+        <S.Button onClick={handleClickLogout}>Выйти</S.Button>
       </S.PopupLogin>
     </S.BlackoutWrapper>
   )
