@@ -81,21 +81,25 @@ export const BlackoutWrapper = styled.div`
 `
 
 export const PopupLogin = styled.div`
-  --modal-width: 366px;
-  --modal-height: 331px;
-  position: absolute;
-  left: calc(50% - (var(--modal-width) / 2));
-  top: calc(50% - (var(--modal-height) / 2));
-  box-sizing: border-box;
-  width: var(--modal-width);
-  min-height: var(--modal-height);
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+
   border: 1px solid #d0cece;
   border-radius: 12px;
-  padding: 33px 47px 47px 41px;
+  padding: 33px 47px 14px 41px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+
+export const closeWindow = styled.img`
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  width: 15px;
 `
 
 export const TextExit = styled.p`
