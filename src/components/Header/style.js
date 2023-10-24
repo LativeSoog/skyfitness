@@ -6,7 +6,12 @@ export const Header = styled.div`
   width: 100%;
   max-width: 1160px;
   justify-content: space-between;
+  align-items: center;
   padding-top: 30px;
+
+  @media (max-width: 767px) {
+    padding-top: 0;
+  }
 `
 export const HeaderLogo = styled(Link)`
   display: flex;
@@ -49,7 +54,7 @@ export const Personal = styled.div`
 `
 
 export const Name = styled.p`
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `

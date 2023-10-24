@@ -15,8 +15,4 @@ export const Container = styled.div`
   padding: 35px 0;
   display: flex;
   flex-direction: column;
-
-  @media (max-width: 1219px) {
-    align-items: center;
-  }
 `
