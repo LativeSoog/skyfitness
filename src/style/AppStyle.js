@@ -29,4 +29,8 @@ a:visited {
 button {
   cursor: pointer;
 }
+
+input {
+  outline: none;
+}
 `

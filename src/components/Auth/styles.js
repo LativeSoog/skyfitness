@@ -3,22 +3,21 @@ import styled from 'styled-components'
 export const PageContainer = styled.div`
   max-width: 100%;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.85);
 `
 
 export const ModalForm = styled.div`
-  --modal-width: 366px;
-  --modal-height: 439px;
-
-  position: absolute;
-  left: calc(50% - (var(--modal-width) / 2));
-  top: calc(50% - (var(--modal-height) / 2));
-  box-sizing: border-box;
-  width: var(--modal-width);
-  min-height: var(--modal-height);
+  width: 365px;
   background-color: #ffffff;
   border-radius: 12px;
   padding: 43px 47px 47px 40px;
+
+  @media (max-width: 375px) {
+    width: 100%;
+  }
 `
 export const ModalLogo = styled.div`
   display: flex;
@@ -58,6 +57,7 @@ const Button = styled.button`
   height: 52px;
   border-radius: 46px;
   border: none;
+
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -65,6 +65,10 @@ const Button = styled.button`
 
   &:disabled {
     background-color: #303030;
+  }
+  
+  @media (max-width: 375px) {
+    width: 100%;
   }
 `
 
@@ -115,4 +119,11 @@ export const Error = styled.div`
   line-height: 24px;
   margin-top: 20px;
   text-align: left;
+`
+export const linkSingUp = styled.span`
+  color: rgb(28 0 255);
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
