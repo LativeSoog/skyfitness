@@ -4,11 +4,16 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { setUser } from './store/slices/userSlice'
 import { useDispatch } from 'react-redux'
 import { auth } from './firebase'
-import { useEffect } from 'react'
-
+import { useEffect, useState } from 'react'
+import { getCourses } from './api'
 function App() {
   const dispatch = useDispatch()
+  const [courses, setCourses] = useState({})
   useEffect(() => {
+    getCourses()
+      .then((courses) => {
+        console.log(courses)
+        setCourses(courses)})
     dispatch(
       setUser({
         id: JSON.parse(localStorage.getItem('user'))?.uid,
@@ -23,7 +28,7 @@ function App() {
   return (
     <>
       <S.StyLeGlobal />
-      <AppRoutes />
+      <AppRoutes courses={courses} />
     </>
   )
 }
