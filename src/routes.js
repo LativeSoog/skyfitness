@@ -6,14 +6,13 @@ import { ProfilePage } from './page/Profile/ProfilePage'
 import { SignUpPage } from './page/SignUp/SignUpPage'
 import { LoginPage } from './page/LogIn/LoginPage'
 import { TrainingVideoPage } from './page/TrainingVideo/TrainingVideoPage'
-import { ChangePasswordPage } from './page/ChangePassword/ChangePasswordPage'
-import { ChangeLoginPage } from './page/ChangeLogin/ChangeLoginPage'
 import { PageLayout } from './components/PageLayout/PageLayout'
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 export const AppRoutes = ({ courses }) => {
   return (
     <Routes>
-      <Route index element={<MainPage courses={courses}/>} />
+      <Route index element={<MainPage courses={courses} />} />
       <Route path="/" element={<PageLayout />}>
         <Route path="*" element={<NotFoundPage />} />
         <Route
@@ -25,8 +24,17 @@ export const AppRoutes = ({ courses }) => {
       </Route>
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/password-change" element={<ChangePasswordPage />} />
-      <Route path="/login-change" element={<ChangeLoginPage />} />
+
+      <Route element={<ProtectedRoute redirectPath={'/login'} />}>
+        <Route index element={<MainPage />} />
+        <Route path="/" element={<PageLayout />}>
+          <Route path="/training" element={<TrainingPage />} />
+          <Route path="/training-video" element={<TrainingVideoPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+      </Route>
+
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
 }

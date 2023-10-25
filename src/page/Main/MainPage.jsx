@@ -3,6 +3,12 @@ import { TrainingBlock } from '../../components/TrainingBlock/TrainingBlock'
 import * as S from './styles'
 
 export const MainPage = ({ courses }) => {
+  const handleClickGoToUp = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
   return (
     <S.Wrapper>
       <S.Container>
@@ -22,7 +28,9 @@ export const MainPage = ({ courses }) => {
           <TrainingBlock courses={courses} />
         </S.TrainingBlock>
         <S.ContentFooter>
-          <S.ContentFooterButton>Наверх &#8593;</S.ContentFooterButton>
+          <S.ContentFooterButton onClick={handleClickGoToUp}>
+            Наверх &#8593;
+          </S.ContentFooterButton>
         </S.ContentFooter>
       </S.Container>
     </S.Wrapper>

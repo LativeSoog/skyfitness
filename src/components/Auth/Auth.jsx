@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import * as S from './styles.js'
 import { useEffect, useState } from 'react'
+import { setUser } from '../../store/slices/userSlice'
+import { useDispatch } from 'react-redux'
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth'
 
 export default function AuthPage({ isLoginMode = false }) {
   const [error, setError] = useState(null)
@@ -10,26 +17,39 @@ export default function AuthPage({ isLoginMode = false }) {
   const [repeatPassword, setRepeatPassword] = useState('')
   const [disable, setDisable] = useState(false)
   let navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const loginUser = () => {
-    console.log('user logged in')
-  }
-
-  const registerUser = () => {
-    console.log('user registered')
-  }
-
-  const handleLogin = async () => {
+  const loginUser = (email, password) => {
+    const auth = getAuth()
     if (!email || !password) {
       setError('Заполните все поля')
       return
     }
     setDisable(true)
-    loginUser()
-    setDisable(false)
+    signInWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', JSON.stringify(user.accessToken))
+        console.log('user ->', user)
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            login: user.login,
+            password: user.password,
+            token: user.accessToken,
+          }),
+        )
+        navigate('/')
+      })
+      .catch(console.error)
+      .finally(() => {
+        setDisable(false)
+      })
   }
 
-  const handleRegister = async () => {
+  const registerUser = (email, password, repeatPassword) => {
+    const auth = getAuth()
     if (!email || !password || !repeatPassword) {
       setError('Заполните все поля')
       return
@@ -39,8 +59,26 @@ export default function AuthPage({ isLoginMode = false }) {
       return
     }
     setDisable(true)
-    registerUser()
-    setDisable(false)
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', JSON.stringify(user.accessToken))
+        console.log('user ->', user)
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            login: user.login,
+            password: user.password,
+            token: user.accessToken,
+          }),
+        )
+        navigate('/')
+      })
+      .catch(console.error)
+      .finally(() => {
+        setDisable(false)
+      })
   }
 
   useEffect(() => {
@@ -82,9 +120,7 @@ export default function AuthPage({ isLoginMode = false }) {
               {disable ? (
                 <p style={{ color: '#000' }}>Выполняется вход...</p>
               ) : (
-                <S.PrimaryButton
-                  onClick={() => handleLogin({ email, password })}
-                >
+                <S.PrimaryButton onClick={() => loginUser(email, password)}>
                   Войти
                 </S.PrimaryButton>
               )}
@@ -130,7 +166,9 @@ export default function AuthPage({ isLoginMode = false }) {
               {disable ? (
                 <p style={{ color: '#000' }}>Регистрируем пользователя...</p>
               ) : (
-                <S.PrimaryButton onClick={handleRegister}>
+                <S.PrimaryButton
+                  onClick={() => registerUser(email, password, repeatPassword)}
+                >
                   Зарегистрироваться
                 </S.PrimaryButton>
               )}

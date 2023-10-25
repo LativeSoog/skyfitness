@@ -1,30 +1,53 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import * as S from './style'
+import { useDispatch } from 'react-redux'
+import { setNewLogin, setNewPassword } from '../../store/slices/userSlice'
+import { useAuth } from '../../hooks/use-auth'
+import {
+  getAuth,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
+} from 'firebase/auth'
 
 export const ProfilePage = () => {
-  const [newLogin, setNewLogin] = React.useState(false)
-  const [newPassword, setNewPassword] = React.useState(false)
-  const [workoutSelection, setWorkoutSelection] = React.useState(false)
+  const [openEditLogin, setOpenEditLogin] = React.useState(false)
+  const [openFormOldPassword, setOpenFormOldPassword] = React.useState(false)
+  const [openEditPassword, setOpenEditPassword] = React.useState(false)
+  const [openWorkoutSelection, setOpenWorkoutSelection] = React.useState(false)
+  const { email, login, password } = useAuth()
 
   return (
     <>
-      {newLogin && <NewLoginForm setNewLogin={setNewLogin} />}
-      {newPassword && <NewPasswordForm setNewPassword={setNewPassword} />}
-      {workoutSelection && (
-        <WorkoutSelectionForm setWorkoutSelection={setWorkoutSelection} />
+      {openEditLogin && <NewLoginForm setOpenEditLogin={setOpenEditLogin} />}
+      {openFormOldPassword && (
+        <OldPasswordForm
+          setOpenFormOldPassword={setOpenFormOldPassword}
+          setOpenEditPassword={setOpenEditPassword}
+        />
+      )}
+      {openEditPassword && (
+        <NewPasswordForm setOpenEditPassword={setOpenEditPassword} />
+      )}
+      {openWorkoutSelection && (
+        <WorkoutSelectionForm
+          setOpenWorkoutSelection={setOpenWorkoutSelection}
+        />
       )}
       <S.ProfileBlock>
         <S.Title>Мой профиль</S.Title>
         <S.InfoBlock>
-          <S.TextInfo>Логин: sergey.petrov96</S.TextInfo>
-          <S.TextInfo>Пароль: 4fkhdj880d</S.TextInfo>
+          <S.TextInfo>Логин: {login ? login : email}</S.TextInfo>
+          <S.TextInfo>
+            Пароль: {password ? password : '●●●●●●●'}
+          </S.TextInfo>
         </S.InfoBlock>
         <S.ButtonBlock>
-          <S.Button onClick={() => setNewLogin(true)}>
+          <S.Button onClick={() => setOpenEditLogin(true)}>
             Редактировать логин
           </S.Button>
-          <S.Button onClick={() => setNewPassword(true)}>
+          <S.Button onClick={() => setOpenFormOldPassword(true)}>
             Редактировать пароль
           </S.Button>
         </S.ButtonBlock>
@@ -35,7 +58,7 @@ export const ProfilePage = () => {
           <S.Item>
             <S.ItemImg src="img/card-course/card-yoga1.jpeg" alt="card-yoga" />
             <S.ItemTitle>Йога</S.ItemTitle>
-            <S.GreenButton onClick={() => setWorkoutSelection(true)}>
+            <S.GreenButton onClick={() => setOpenWorkoutSelection(true)}>
               Перейти →
             </S.GreenButton>
           </S.Item>
@@ -45,7 +68,7 @@ export const ProfilePage = () => {
               alt="card-yoga"
             />
             <S.ItemTitle>Стретчинг</S.ItemTitle>
-            <S.GreenButton onClick={() => setWorkoutSelection(true)}>
+            <S.GreenButton onClick={() => setOpenWorkoutSelection(true)}>
               Перейти →
             </S.GreenButton>
           </S.Item>
@@ -55,7 +78,7 @@ export const ProfilePage = () => {
               alt="card-yoga"
             />
             <S.ItemTitle>Бодифлекс</S.ItemTitle>
-            <S.GreenButton onClick={() => setWorkoutSelection(true)}>
+            <S.GreenButton onClick={() => setOpenWorkoutSelection(true)}>
               Перейти →
             </S.GreenButton>
           </S.Item>
@@ -65,7 +88,17 @@ export const ProfilePage = () => {
   )
 }
 
-const NewLoginForm = ({ setNewLogin }) => {
+const NewLoginForm = ({ setOpenEditLogin }) => {
+  const dispatch = useDispatch()
+  const { email, login } = useAuth()
+  const [newLog, setNewLog] = React.useState(login ? login : email)
+
+  const saveNewLogin = () => {
+    setNewLog(newLog)
+    dispatch(setNewLogin(newLog))
+    setOpenEditLogin(false)
+  }
+
   return (
     <S.BlackoutWrapper>
       <S.PopupLogin>
@@ -74,15 +107,94 @@ const NewLoginForm = ({ setNewLogin }) => {
         </S.LoginLogo>
         <S.Inputs>
           <S.TitleInput>Новый логин:</S.TitleInput>
-          <S.Input type="text" placeholder="Логин" />
+          <S.Input
+            type="text"
+            placeholder="Логин"
+            value={newLog}
+            onChange={(e) => setNewLog(e.target.value)}
+          />
         </S.Inputs>
-        <S.Button onClick={() => setNewLogin(false)}>Сохранить</S.Button>
+        <S.Button disabled={!newLog.trim()} onClick={() => saveNewLogin()}>Сохранить</S.Button>
       </S.PopupLogin>
     </S.BlackoutWrapper>
   )
 }
 
-const NewPasswordForm = ({ setNewPassword }) => {
+const OldPasswordForm = ({ setOpenFormOldPassword, setOpenEditPassword }) => {
+  const [oldPass, setOldPass] = React.useState('')
+  const [errorPassword, setErrorPassword] = React.useState(false)
+
+  const checkOldPassword = () => {
+    const auth = getAuth()
+    const user = auth.currentUser
+
+    const credential = EmailAuthProvider.credential(user.email, oldPass)
+
+    reauthenticateWithCredential(user, credential)
+      .then(() => {
+        console.log('User re-authenticated.')
+        setOpenFormOldPassword(false)
+        setOpenEditPassword(true)
+      })
+      .catch((error) => {
+        setErrorPassword(true)
+      })
+  }
+
+  return (
+    <S.BlackoutWrapper>
+      <S.PopupLogin>
+        <S.LoginLogo>
+          <img width={220} height={35} src="img/logo-dark.svg" alt="logo" />
+        </S.LoginLogo>
+        <S.Inputs>
+          <S.TitleInput>Введите старый пароль:</S.TitleInput>
+          <S.Input
+            type="text"
+            placeholder="Старый пароль"
+            value={oldPass}
+            onChange={(e) => setOldPass(e.target.value)}
+          />
+        </S.Inputs>
+        {errorPassword && (
+          <p
+            style={{
+              color: 'tomato',
+              marginTop: '-20px',
+              marginBottom: '10px',
+            }}
+          >
+            Неверный пароль
+          </p>
+        )}
+        <S.Button disabled={!oldPass.trim()} onClick={() => checkOldPassword()}>
+          Далее
+        </S.Button>
+        <S.Button onClick={() => setOpenFormOldPassword(false)}>Назад</S.Button>
+      </S.PopupLogin>
+    </S.BlackoutWrapper>
+  )
+}
+
+const NewPasswordForm = ({ setOpenEditPassword }) => {
+  const dispatch = useDispatch()
+  const [newPass, setNewPass] = React.useState('')
+  const [repeatNewPass, setRepeatNewPass] = React.useState('')
+
+  const saveNewPassword = () => {
+    const auth = getAuth()
+    const user = auth.currentUser
+
+    updatePassword(user, newPass)
+      .then(() => {
+        dispatch(setNewPassword(newPass))
+        setOpenEditPassword(false)
+        console.log('Пароль успешно изменен')
+      })
+      .catch((error) => {
+        console.log('Ошибка при смене пароля')
+      })
+  }
   return (
     <S.BlackoutWrapper>
       <S.PopupPassword>
@@ -91,16 +203,36 @@ const NewPasswordForm = ({ setNewPassword }) => {
         </S.LoginLogo>
         <S.Inputs>
           <S.TitleInput>Новый пароль:</S.TitleInput>
-          <S.Input type="text" placeholder="Пароль" />
-          <S.Input type="text" placeholder="Повторите пароль" />
+          <S.Input
+            type="text"
+            placeholder="Пароль"
+            value={newPass}
+            onChange={(e) => setNewPass(e.target.value)}
+          />
+          <S.Input
+            type="text"
+            placeholder="Повторите пароль"
+            value={repeatNewPass}
+            onChange={(e) => setRepeatNewPass(e.target.value)}
+          />
         </S.Inputs>
-        <S.Button onClick={() => setNewPassword(false)}>Сохранить</S.Button>
+        {newPass !== repeatNewPass ? (
+          <S.WarningMessage>Пароли не совпадают</S.WarningMessage>
+        ) : (
+          <S.Button
+            disabled={!newPass.trim() && !repeatNewPass.trim()}
+            onClick={() => saveNewPassword()}
+          >
+            Сохранить
+          </S.Button>
+        )}
+        <S.Button onClick={() => setOpenEditPassword(false)}>Закрыть</S.Button>
       </S.PopupPassword>
     </S.BlackoutWrapper>
   )
 }
 
-const WorkoutSelectionForm = ({ setWorkoutSelection }) => {
+const WorkoutSelectionForm = ({ setOpenWorkoutSelection }) => {
   return (
     <S.BlackoutWrapper>
       <S.PopupWorkout>
@@ -131,7 +263,9 @@ const WorkoutSelectionForm = ({ setWorkoutSelection }) => {
             </S.WorkoutItem>
           </S.ListWorkout>
         </Link>
-        <S.Button onClick={() => setWorkoutSelection(false)}>Назад</S.Button>
+        <S.Button onClick={() => setOpenWorkoutSelection(false)}>
+          Назад
+        </S.Button>
       </S.PopupWorkout>
     </S.BlackoutWrapper>
   )
