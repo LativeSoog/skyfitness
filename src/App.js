@@ -15,6 +15,7 @@ function App() {
         email: JSON.parse(localStorage.getItem('user'))?.email,
         token: JSON.parse(localStorage.getItem('user'))?.stsTokenManager
           .accessToken,
+        login: JSON.parse(localStorage.getItem('login')),
       }),
     )
   }, [])

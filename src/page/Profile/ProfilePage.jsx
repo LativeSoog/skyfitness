@@ -39,9 +39,7 @@ export const ProfilePage = () => {
         <S.Title>Мой профиль</S.Title>
         <S.InfoBlock>
           <S.TextInfo>Логин: {login ? login : email}</S.TextInfo>
-          <S.TextInfo>
-            Пароль: {password ? password : '●●●●●●●'}
-          </S.TextInfo>
+          <S.TextInfo>Пароль: {password ? password : '●●●●●●●'}</S.TextInfo>
         </S.InfoBlock>
         <S.ButtonBlock>
           <S.Button onClick={() => setOpenEditLogin(true)}>
@@ -96,6 +94,7 @@ const NewLoginForm = ({ setOpenEditLogin }) => {
   const saveNewLogin = () => {
     setNewLog(newLog)
     dispatch(setNewLogin(newLog))
+    localStorage.setItem('login', JSON.stringify(newLog))
     setOpenEditLogin(false)
   }
 
@@ -114,7 +113,9 @@ const NewLoginForm = ({ setOpenEditLogin }) => {
             onChange={(e) => setNewLog(e.target.value)}
           />
         </S.Inputs>
-        <S.Button disabled={!newLog.trim()} onClick={() => saveNewLogin()}>Сохранить</S.Button>
+        <S.Button disabled={!newLog.trim()} onClick={() => saveNewLogin()}>
+          Сохранить
+        </S.Button>
       </S.PopupLogin>
     </S.BlackoutWrapper>
   )
