@@ -9,9 +9,19 @@ import { TrainingVideoPage } from './page/TrainingVideo/TrainingVideoPage'
 import { PageLayout } from './components/PageLayout/PageLayout'
 import { ProtectedRoute } from './components/ProtectedRoute'
 
-export const AppRoutes = () => {
+export const AppRoutes = ({ courses }) => {
   return (
     <Routes>
+      <Route index element={<MainPage courses={courses} />} />
+      <Route path="/" element={<PageLayout />}>
+        <Route path="*" element={<NotFoundPage />} />
+        <Route
+          path="/courses/:id"
+          element={<TrainingPage courses={courses} />}
+        />
+        <Route path="/training-video" element={<TrainingVideoPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Route>
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/login" element={<LoginPage />} />
 

@@ -5,8 +5,7 @@ import { TrainingBlockSkeleton } from '../../components/Skeletons/TrainingBlockS
 import * as S from './styles'
 import React from 'react'
 
-
-export const MainPage = () => {
+export const MainPage = ({ courses }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const skeletonBlocks = Array(5).fill().map((_, index) => <TrainingBlockSkeleton key={index} />)
   const handleClickGoToUp = () => {
@@ -49,35 +48,9 @@ export const MainPage = () => {
             <S.ContentDescriptionImg src="/img/sale-sticker.png" />
           </S.ContentDescriptionTitleImg>
         </S.ContentDescription>
-
         <S.TrainingBlock>
-          <TrainingBlock
-            urlImg="/img/card-course/card-yoga.jpeg"
-            link="/training"
-            nameCourse="Йога"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-stretching.jpeg"
-            link="/"
-            nameCourse="Стретчинг"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-dance.jpeg"
-            link="/"
-            nameCourse="Танцевальный фитнес"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-step-aero.jpeg"
-            link="/"
-            nameCourse="Степ-аэробика"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-bodyflex.jpeg"
-            link="/"
-            nameCourse="Бодифлекс"
-          />
+          <TrainingBlock courses={courses} />
         </S.TrainingBlock>
-
         <S.ContentFooter>
           <S.ContentFooterButton onClick={handleClickGoToUp}>
             Наверх &#8593;
