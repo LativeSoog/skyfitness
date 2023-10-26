@@ -2,7 +2,13 @@ import { HeaderPurple } from '../../components/Header/Header'
 import { TrainingBlock } from '../../components/TrainingBlock/TrainingBlock'
 import * as S from './styles'
 
-export const MainPage = () => {
+export const MainPage = ({ courses }) => {
+  const handleClickGoToUp = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
   return (
     <S.Wrapper>
       <S.Container>
@@ -18,37 +24,13 @@ export const MainPage = () => {
             <S.ContentDescriptionImg src="/img/sale-sticker.png" />
           </S.ContentDescriptionTitleImg>
         </S.ContentDescription>
-
         <S.TrainingBlock>
-          <TrainingBlock
-            urlImg="/img/card-course/card-yoga.jpeg"
-            link="/training"
-            nameCourse="Йога"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-stretching.jpeg"
-            link="/"
-            nameCourse="Стретчинг"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-dance.jpeg"
-            link="/"
-            nameCourse="Танцевальный фитнес"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-step-aero.jpeg"
-            link="/"
-            nameCourse="Степ-аэробика"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-bodyflex.jpeg"
-            link="/"
-            nameCourse="Бодифлекс"
-          />
+          <TrainingBlock courses={courses} />
         </S.TrainingBlock>
-
         <S.ContentFooter>
-          <S.ContentFooterButton>Наверх &#8593;</S.ContentFooterButton>
+          <S.ContentFooterButton onClick={handleClickGoToUp}>
+            Наверх &#8593;
+          </S.ContentFooterButton>
         </S.ContentFooter>
       </S.Container>
     </S.Wrapper>
