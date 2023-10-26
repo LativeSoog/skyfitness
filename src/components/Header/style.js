@@ -10,7 +10,7 @@ export const Header = styled.div`
   padding-top: 30px;
 
   @media (max-width: 767px) {
-    padding-top: 0;
+    padding-top: 15px;
   }
 `
 export const HeaderLogo = styled(Link)`
