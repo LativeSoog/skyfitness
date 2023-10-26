@@ -2,11 +2,27 @@ import { Link, useParams } from 'react-router-dom'
 import { getCourses } from '../../api'
 import { setCourses } from '../../store/coursesSlice'
 import * as S from './styles'
+import { TrainingSkillSkeleton } from '../../components/Skeletons/ТrainingSkillSkeleton';
+import React from 'react'
+
 export const TrainingPage = ({ courses }) => {
+  const [isLoading, setIsLoading] = React.useState(true);
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
   const param = useParams()
   const { data, description, id } = getCourses({ id: param.id })
   console.log(setCourses({ id: param.id }))
   return (
+     <div>
+        {isLoading ? ( 
+          <>
+        <TrainingSkillSkeleton/>
+        </>
+        ) : ( 
     <>
       <S.ScillCard>
         <S.ScillImg src="/img/Group.jpg" alt="scill"></S.ScillImg>
@@ -75,5 +91,8 @@ export const TrainingPage = ({ courses }) => {
         <S.PhoneImg src="/img/phone.svg" alt="phone" />
       </S.RecordBox>
     </>
+ )}
+         </div>
   )
 }
+
