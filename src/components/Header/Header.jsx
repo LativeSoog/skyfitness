@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import * as S from './style'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/use-auth'
 import { removeUser } from '../../store/slices/userSlice'
 import { useDispatch } from 'react-redux'
+import { getAuth, signOut } from 'firebase/auth'
+import { auth } from '../../firebase'
 
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -51,6 +53,7 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
     document.body.style.overflow = 'hidden'
     setExitForm(true)
   }
+
   return (
     <>
       <S.Header>
@@ -78,8 +81,8 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
 
 const ExitForm = ({ setExitForm }) => {
   const dispatch = useDispatch()
-  const { email, login } = useAuth()
 
+  const { email, login } = useAuth()
   const closeWindow = () => {
     document.body.style.overflow = null
     setExitForm(false)
@@ -88,11 +91,25 @@ const ExitForm = ({ setExitForm }) => {
   const handleClickForm = (event) => {
     event.stopPropagation()
   }
-
+  
+  const logout = async () => {
+    try {
+      await signOut(auth)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  
   const handleClickLogout = () => {
     document.body.style.overflow = null
+    logout()
     dispatch(removeUser())
+    localStorage.removeItem('user')
+    localStorage.removeItem('login')
+    navigate('/login')
   }
+  let navigate = useNavigate()
+  const auth = getAuth()
 
   return (
     <S.BlackoutWrapper onClick={closeWindow}>

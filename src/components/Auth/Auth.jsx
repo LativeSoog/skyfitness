@@ -21,8 +21,15 @@ export default function AuthPage({ isLoginMode = false }) {
 
   const loginUser = (email, password) => {
     const auth = getAuth()
+    if (!email || !password) {
+      setError('Заполните все поля')
+      return
+    }
+    setDisable(true)
     signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', JSON.stringify(user.accessToken))
         console.log('user ->', user)
         dispatch(
           setUser({
@@ -36,12 +43,26 @@ export default function AuthPage({ isLoginMode = false }) {
         navigate('/')
       })
       .catch(console.error)
+      .finally(() => {
+        setDisable(false)
+      })
   }
 
-  const registerUser = (email, password) => {
+  const registerUser = (email, password, repeatPassword) => {
     const auth = getAuth()
+    if (!email || !password || !repeatPassword) {
+      setError('Заполните все поля')
+      return
+    }
+    if (password !== repeatPassword) {
+      setError('Пароли не совпадают')
+      return
+    }
+    setDisable(true)
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', JSON.stringify(user.accessToken))
         console.log('user ->', user)
         dispatch(
           setUser({
@@ -55,31 +76,10 @@ export default function AuthPage({ isLoginMode = false }) {
         navigate('/')
       })
       .catch(console.error)
+      .finally(() => {
+        setDisable(false)
+      })
   }
-
-  // const handleLogin = async () => {
-  //   if (!email || !password) {
-  //     setError('Заполните все поля')
-  //     return
-  //   }
-  //   setDisable(true)
-  //   loginUser()
-  //   setDisable(false)
-  // }
-
-  // const handleRegister = async () => {
-  //   if (!email || !password || !repeatPassword) {
-  //     setError('Заполните все поля')
-  //     return
-  //   }
-  //   if (password !== repeatPassword) {
-  //     setError('Пароли не совпадают')
-  //     return
-  //   }
-  //   setDisable(true)
-  //   registerUser()
-  //   setDisable(false)
-  // }
 
   useEffect(() => {
     setError(null)
@@ -166,7 +166,9 @@ export default function AuthPage({ isLoginMode = false }) {
               {disable ? (
                 <p style={{ color: '#000' }}>Регистрируем пользователя...</p>
               ) : (
-                <S.PrimaryButton onClick={() => registerUser(email, password)}>
+                <S.PrimaryButton
+                  onClick={() => registerUser(email, password, repeatPassword)}
+                >
                   Зарегистрироваться
                 </S.PrimaryButton>
               )}
