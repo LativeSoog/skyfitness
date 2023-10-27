@@ -62,9 +62,11 @@ export const breadcrumbs = styled.p`
     line-height: 12px;
   }
 `
-export const video = styled.video`
+export const video = styled.iframe`
+  aspect-ratio: 16/9;
   width: 100%;
   z-index: 10;
+  border: 0;
 `
 export const exercise = styled.div`
   margin-top: 45px;
@@ -261,10 +263,11 @@ export const progressBarStatText = styled.p`
     line-height: 12px;
   }
 `
-const progressBarStatPercent = `
+export const progressBarStatPercent = styled.div`
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+  border: 2px solid rgb(${(props) => props.$rgbCode});
 
   width: 100%;
   max-width: calc(100% - 250px);
@@ -286,20 +289,11 @@ const progressBarStatPercent = `
     max-width: calc(100% - 110px);
   }
 `
-export const progressBarStatPercentGreen = styled.div`
-  ${progressBarStatPercent};
-  border: 2px solid rgba(86, 94, 239, 1);
-`
-export const progressBarStatPercentOrange = styled.div`
-  ${progressBarStatPercent};
-  border: 2px solid rgba(255, 109, 0, 1);
-`
-export const progressBarStatPercentPurple = styled.div`
-  ${progressBarStatPercent};
-  border: 2px solid rgba(154, 72, 241, 1);
-`
 
-const progressBarStatPercentColor = `
+export const progressBarStatPercentFill = styled.div`
+  width: ${(props) => props.$percent}%;
+  background: rgb(${(props) => props.$rgbCode});
+
   box-sizing: border-box;
   position: absolute;
   display: flex;
@@ -328,23 +322,6 @@ const progressBarStatPercentColor = `
     font-size: 10px;
     line-height: 10px;
   }
-
-`
-
-export const progressBarStatPercentColorGreen = styled.div`
-  ${progressBarStatPercentColor};
-  width: ${(props) => props.$percent}%;
-  background: rgba(86, 94, 239, 1);
-`
-export const progressBarStatPercentColorOrange = styled.div`
-  ${progressBarStatPercentColor};
-  width: ${(props) => props.$percent}%;
-  background: rgba(255, 109, 0, 1);
-`
-export const progressBarStatPercentColorPurple = styled.div`
-  ${progressBarStatPercentColor};
-  width: ${(props) => props.$percent}%;
-  background: rgba(154, 72, 241, 1);
 `
 
 // progress form
