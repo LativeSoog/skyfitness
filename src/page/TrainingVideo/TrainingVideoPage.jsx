@@ -17,10 +17,18 @@ const progressPercent = {
 // s1 s2 s3
 // st1 st2 st3 st4
 // y1 y2 y3 y4 y5
+// пока не работают (не обновлены в базе s1 s2 s3 y1 y3 y4 y5)
+
 const currentPage = 'y2'
 
 // чтобы прогресс бары были разными цветами
-const colors = ['86, 94, 239', '255, 109, 0', '154, 72, 241']
+const colors = [
+  '86, 94, 239',
+  '255, 109, 0',
+  '154, 72, 241',
+  '101, 197, 5',
+  '210 16 225',
+]
 
 export const TrainingVideoPage = () => {
   const [progressForm, setProgressForm] = useState(false)
@@ -91,7 +99,9 @@ export const TrainingVideoPage = () => {
                       $percent={(progressPercent[index] * 100) / item.times}
                       $rgbCode={colors[index]}
                     >
-                      {`${Math.round((progressPercent[index] * 100) / item.times)}%`}
+                      {`${Math.round(
+                        (progressPercent[index] * 100) / item.times,
+                      )}%`}
                     </S.progressBarStatPercentFill>
                   </S.progressBarStatPercent>
                 </S.progressBarStat>
