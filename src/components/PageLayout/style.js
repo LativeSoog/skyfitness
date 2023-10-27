@@ -1,24 +1,18 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  box-sizing: border-box;
-  padding: 0 30px;
-  width: 100vw;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  margin-bottom: 94px;
-
-  @media (max-width: 768px) {
-    margin-bottom: 40px;
-  }
+  flex-direction: column;
+  align-items: center;
+  padding: 0 30px;
 `
 export const Container = styled.div`
-  max-width: 1440px;
-  height: 100vh;
-  margin: 0 auto;
-  padding: 0 140px;
-
-  @media (max-width: 768px) {
-    padding: 0 30px;
-  }
+  width: 100%;
+  max-width: 1160px;
+  height: 100%;
+  padding: 35px 0;
+  display: flex;
+  flex-direction: column;
 `

@@ -35,25 +35,23 @@ export const MainPage = ({ courses }) => {
         </S.Wrapper>
     ) : ( 
     <S.Wrapper>
+      <HeaderPurple />
       <S.Container>
-        <HeaderPurple />
         <S.ContentDescription>
+          <S.ContentDescriptionImg src="/img/sale-sticker.png" />
           <S.ContentDescriptionPreTitle>
             Онлайн-тренировки для занятий дома
           </S.ContentDescriptionPreTitle>
-          <S.ContentDescriptionTitleImg>
-            <S.ContentDescriptionTitle>
-              Начните заниматься спортом и улучшите качество жизни
-            </S.ContentDescriptionTitle>
-            <S.ContentDescriptionImg src="/img/sale-sticker.png" />
-          </S.ContentDescriptionTitleImg>
+          <S.ContentDescriptionTitle>
+            Начните заниматься спортом и улучшите качество жизни
+          </S.ContentDescriptionTitle>
         </S.ContentDescription>
         <S.TrainingBlock>
           <TrainingBlock courses={courses} />
         </S.TrainingBlock>
         <S.ContentFooter>
           <S.ContentFooterButton onClick={handleClickGoToUp}>
-            Наверх &#8593;
+            Наверх
           </S.ContentFooterButton>
         </S.ContentFooter>
       </S.Container>

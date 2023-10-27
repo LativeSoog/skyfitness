@@ -3,10 +3,19 @@ import styled from 'styled-components'
 
 export const Header = styled.div`
   display: flex;
+  width: 100%;
+  max-width: 1160px;
   justify-content: space-between;
+  align-items: center;
   padding-top: 30px;
+
+  @media (max-width: 767px) {
+    padding-top: 15px;
+  }
 `
-export const HeaderLogo = styled(Link)``
+export const HeaderLogo = styled(Link)`
+  display: flex;
+`
 
 export const HeaderLogoImg = styled.img`
   @media (max-width: 480px) {
@@ -40,18 +49,22 @@ export const HeaderButtonLink = styled(Link)``
 export const Personal = styled.div`
   display: flex;
   align-items: center;
+  gap: 15px;
   cursor: pointer;
 `
 
 export const Name = styled.p`
-  margin-left: 15px;
-  margin-right: 12px;
+  @media (max-width: 767px) {
+    display: none;
+  }
 `
 
 export const NameLight = styled.p`
   color: #fff;
-  margin-left: 15px;
-  margin-right: 12px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 export const BlackoutWrapper = styled.div`
@@ -68,21 +81,25 @@ export const BlackoutWrapper = styled.div`
 `
 
 export const PopupLogin = styled.div`
-  --modal-width: 366px;
-  --modal-height: 331px;
-  position: absolute;
-  left: calc(50% - (var(--modal-width) / 2));
-  top: calc(50% - (var(--modal-height) / 2));
-  box-sizing: border-box;
-  width: var(--modal-width);
-  min-height: var(--modal-height);
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+
   border: 1px solid #d0cece;
   border-radius: 12px;
-  padding: 33px 47px 47px 41px;
+  padding: 33px 47px 14px 41px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+
+export const closeWindow = styled.img`
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  width: 15px;
 `
 
 export const TextExit = styled.p`
