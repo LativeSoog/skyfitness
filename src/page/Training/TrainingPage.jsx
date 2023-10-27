@@ -31,11 +31,11 @@ export const TrainingPage = ({ courses }) => {
       <S.DirectionConteiner>
         <S.DescriptionText>Направления:</S.DescriptionText>
         <S.YogaDirection>
-          <ul>
+          <S.Direct>
           {scills?.directions.map((item, index) =>
             <S.YogaText key={index}>{item}</S.YogaText>
           )}
-          </ul>
+          </S.Direct>
         </S.YogaDirection>
       </S.DirectionConteiner>
       <S.DiscriptionYoga>
