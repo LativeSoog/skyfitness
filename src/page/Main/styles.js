@@ -77,7 +77,7 @@ export const ContentDescriptionImg = styled.img`
   }
 `
 
-export const TrainingBlocks = styled.div`
+export const TrainingBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 40px;

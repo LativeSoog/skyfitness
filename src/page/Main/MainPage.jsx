@@ -23,33 +23,9 @@ export const MainPage = () => {
           </S.ContentDescriptionTitle>
         </S.ContentDescription>
 
-        <S.TrainingBlocks>
-          <TrainingBlock
-            urlImg="/img/card-course/card-yoga.jpeg"
-            link="/training"
-            nameCourse="Йога"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-stretching.jpeg"
-            link="/"
-            nameCourse="Стретчинг"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-dance.jpeg"
-            link="/"
-            nameCourse="Танцевальный фитнес"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-step-aero.jpeg"
-            link="/"
-            nameCourse="Степ-аэробика"
-          />
-          <TrainingBlock
-            urlImg="/img/card-course/card-bodyflex.jpeg"
-            link="/"
-            nameCourse="Бодифлекс"
-          />
-        </S.TrainingBlocks>
+        <S.TrainingBlock>
+          <TrainingBlock courses={courses} />
+        </S.TrainingBlock>
 
         <S.ContentFooter>
           <S.ContentFooterButton onClick={handleClickGoToUp}>
