@@ -28,9 +28,9 @@ export const Header = () => {
         {exitForm && <ExitForm setExitForm={setExitForm} />}
         {isLogin ? (
           <S.Personal onClick={handleClickExitForm}>
-            <img src="img/avatar.svg" alt="avatar" />
+            <img src="/img/avatar.svg" alt="avatar" />
             <S.Name>{login ? login : email}</S.Name>
-            <img src="img/arrow-down.svg" alt="arrow-down" />
+            <img src="/img/arrow-down.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
           <S.HeaderSectionButton>
@@ -63,9 +63,9 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
         {exitForm && <ExitForm setExitForm={setExitForm} />}
         {isLogin ? (
           <S.Personal onClick={handleClickExitForm}>
-            <img src="img/avatar.svg" alt="avatar" />
+            <img src="/img/avatar.svg" alt="avatar" />
             <S.NameLight>{login ? login : email}</S.NameLight>
-            <img src="img/arrow-down-light.svg" alt="arrow-down" />
+            <img src="/img/arrow-down-light.svg" alt="arrow-down" />
           </S.Personal>
         ) : (
           <S.HeaderSectionButton>

@@ -31,7 +31,7 @@ export const TitleTraining = styled.p`
   font-size: 36px;
   font-weight: 800;
 
-  @media (max-width: 620px) {
+  @media (max-width: 819px) {
     font-size: 22px;
     line-height: 24px;
   }
