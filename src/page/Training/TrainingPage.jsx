@@ -1,16 +1,13 @@
 import { Link, useParams } from 'react-router-dom'
-import { getCourses } from '../../api'
-import { setCourses } from '../../store/coursesSlice'
 import * as S from './styles'
 export const TrainingPage = ({ courses }) => {
   const param = useParams()
-  const { data, description, id } = getCourses({ id: param.id })
-  console.log(setCourses({ id: param.id }))
+  let scills = Object.values(courses).find((course) => course.id === param.id)
   return (
     <>
       <S.ScillCard>
         <S.ScillImg src="/img/Group.jpg" alt="scill"></S.ScillImg>
-        <S.ScillTitle>Йога</S.ScillTitle>
+        <S.ScillTitle>{scills?.name}</S.ScillTitle>
       </S.ScillCard>
       <S.ScillDescription>
         <S.ScillDescriptionTitle>
@@ -19,22 +16,15 @@ export const TrainingPage = ({ courses }) => {
         <S.Description>
           <S.DescriptionTextOne>
             <S.Circle>1</S.Circle>
-            <S.DescriptionText>
-              Давно хотели попробовать йогу, но не решались начать.
-            </S.DescriptionText>
+            <S.DescriptionText>{scills?.towards[0]}</S.DescriptionText>
           </S.DescriptionTextOne>
           <S.DescriptionTextOne>
             <S.Circle>2</S.Circle>
-            <S.DescriptionText>
-              Хотите укрепить позвоночник, избавиться от болей в спине и
-              суставах.
-            </S.DescriptionText>
+            <S.DescriptionText>{scills?.towards[1]}</S.DescriptionText>
           </S.DescriptionTextOne>
           <S.DescriptionTextOne>
             <S.Circle>3</S.Circle>
-            <S.DescriptionText>
-              Ищете активность, полезную для тела и души.
-            </S.DescriptionText>
+            <S.DescriptionText>{scills?.towards[2]}</S.DescriptionText>
           </S.DescriptionTextOne>
         </S.Description>
       </S.ScillDescription>
@@ -42,24 +32,14 @@ export const TrainingPage = ({ courses }) => {
         <S.DescriptionText>Направления:</S.DescriptionText>
         <S.YogaDirection>
           <ul>
-            <S.YogaText>Йога для новичков</S.YogaText>
-            <S.YogaText>Классическая йога</S.YogaText>
-            <S.YogaText>Йогатерапия</S.YogaText>
-          </ul>
-          <ul>
-            <S.YogaText>Кундалини-йога</S.YogaText>
-            <S.YogaText>Хатха-йога</S.YogaText>
-            <S.YogaText>Аштанга-йога</S.YogaText>
+          {scills?.directions.map((item, index) =>
+            <S.YogaText key={index}>{item}</S.YogaText>
+          )}
           </ul>
         </S.YogaDirection>
       </S.DirectionConteiner>
       <S.DiscriptionYoga>
-        <S.TextDiscriptionYoga>
-          Благодаря комплексному воздействию упражнений происходит проработка
-          всех групп мышц, тренировка суставов, улучшается циркуляция крови.
-          Кроме того, упражнения дарят отличное настроение, заряжают бодростью и
-          помогают противостоять стрессам.
-        </S.TextDiscriptionYoga>
+        <S.TextDiscriptionYoga>{scills?.description}</S.TextDiscriptionYoga>
       </S.DiscriptionYoga>
       <S.RecordBox>
         <S.Record>

@@ -10,16 +10,14 @@ function App() {
   const dispatch = useDispatch()
   const [courses, setCourses] = useState({})
   useEffect(() => {
-    getCourses()
-      .then((courses) => {
-        console.log(courses)
-        setCourses(courses)})
+    getCourses().then((courses) => {
+      setCourses(courses)
+    })
     dispatch(
       setUser({
         id: JSON.parse(localStorage.getItem('user'))?.uid,
         email: JSON.parse(localStorage.getItem('user'))?.email,
-        token: JSON.parse(localStorage.getItem('user'))?.stsTokenManager
-          .accessToken,
+        token: JSON.parse(localStorage.getItem('user'))?.stsTokenManager,
         login: JSON.parse(localStorage.getItem('login')),
       }),
     )
