@@ -296,9 +296,16 @@ export const WorkoutItem = styled.li`
   border: 1px solid #000;
   border-radius: 26px;
   padding: 15px;
-  text-align: center;
-  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
   cursor: pointer;
+
+  &:hover {
+    background: #580ea2;
+    color: #fff;
+  }
+
   ${(props) =>
     props.$active &&
     `
@@ -316,7 +323,8 @@ export const WorkoutItem = styled.li`
 `
 export const WorkoutName = styled.h3`
   font-size: 20px;
-  margin-bottom: 12px;
+  transition: 0.3s all;
+
   @media (max-width: 768px) {
     font-size: 16px;
     margin-bottom: 8px;
@@ -340,16 +348,6 @@ export const WorkoutImg = styled.img`
     right: 10px;
     width: 15px;
     heigth: 15px;
-  }
-`
-
-export const WorkoutText = styled.p`
-  font-size: 16px;
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
-  @media (max-width: 480px) {
-    font-size: 9px;
   }
 `
 
