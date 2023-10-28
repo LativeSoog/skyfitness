@@ -17,8 +17,8 @@ export const TrainingVideoPage = () => {
   const [dataPage, setDataPage] = useState(null)
   const [progressPercent, setProgressPercent] = useState(null)
 
-  const currentPage = useParams().id
   const userId = useAuth().id
+  const currentPage = useParams().id
 
   useEffect(() => {
     const fetchData = () => {
@@ -32,7 +32,7 @@ export const TrainingVideoPage = () => {
     }
 
     fetchData()
-  }, [])
+  }, [currentPage])
 
   useEffect(() => {
     setProgressPercent(
@@ -54,7 +54,11 @@ export const TrainingVideoPage = () => {
   return dataPage ? (
     <S.videoPage>
       {progressForm && (
-        <ProgressForm setProgressForm={setProgressForm} dataPage={dataPage} />
+        <ProgressForm
+          setProgressForm={setProgressForm}
+          dataPage={dataPage}
+          userId={userId}
+        />
       )}
       <S.videoPageTitle>{dataPage.title}</S.videoPageTitle>
       <S.breadcrumbs>{dataPage.name}</S.breadcrumbs>
@@ -117,8 +121,9 @@ export const TrainingVideoPage = () => {
   )
 }
 
-const ProgressForm = ({ setProgressForm, dataPage }) => {
+const ProgressForm = ({ setProgressForm, dataPage, userId }) => {
   const [done, setDone] = useState(false)
+  const progressArray = []
 
   const closeForm = () => {
     document.body.style.overflow = null
@@ -135,13 +140,37 @@ const ProgressForm = ({ setProgressForm, dataPage }) => {
     event.stopPropagation()
   }
 
+  const handleChangeInput = (event, index) => {
+    progressArray[index] = event.target.value
+  }
+
   const handleClickSubmit = (event) => {
     event.preventDefault()
-    setDone(true)
-    setTimeout(() => {
-      setDone(false)
-      closeForm()
-    }, 1500)
+
+    const newArrayUsers = [...dataPage.users]
+    newArrayUsers.find((obj) => obj.userId === userId).progress = progressArray
+
+    const patchData = {}
+    patchData[`workout/${dataPage.shortId}/users`] = newArrayUsers
+
+    fetch(
+      'https://skyfitnesspro-workout-default-rtdb.europe-west1.firebasedatabase.app/.json',
+      {
+        method: 'PATCH',
+        body: JSON.stringify(patchData),
+      },
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error('Ошибка при обновлении данных на сервере')
+      }
+      console.log('Данные успешно обновлены на сервере')
+      setDone(true)
+      setTimeout(() => {
+        setDone(false)
+        closeForm()
+        window.location.reload()
+      }, 1500)
+    })
   }
   // без валидации
   return (
@@ -160,6 +189,7 @@ const ProgressForm = ({ setProgressForm, dataPage }) => {
                     {`Сколько раз вы сделали ${item.name.toLowerCase()}?`}
                   </S.progressFormInputText>
                   <S.progressFormInput
+                    onChange={(event) => handleChangeInput(event, index)}
                     type="number"
                     name="quantity"
                     min="0"
