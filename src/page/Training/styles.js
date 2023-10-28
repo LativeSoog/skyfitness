@@ -276,6 +276,7 @@ export const RecordText = styled.p`
   }
 `
 export const btnRecord = styled.button`
+  width: fit-content;
   border-radius: 46px;
   background: #580ea2;
   margin-top: 34px;

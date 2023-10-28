@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import * as S from './styles'
 import { TrainingSkillSkeleton } from '../../components/Skeletons/ТrainingSkillSkeleton'
 import React, { useEffect, useState } from 'react'
@@ -7,8 +7,10 @@ import { useAuth } from '../../hooks/use-auth'
 
 export const TrainingPage = ({ courses }) => {
   const [isLoading, setIsLoading] = React.useState(true)
-  const [dataCourse, setDataCourses] = useState(null)
+  const [allCourses, setAllCoueses] = useState(null)
+  const [dataCourse, setDataCourse] = useState(null)
 
+  const navigate = useNavigate()
   const param = useParams()
   let scills = Object.values(courses).find((course) => course.id === param.id)
 
@@ -18,9 +20,10 @@ export const TrainingPage = ({ courses }) => {
     const fetchData = () => {
       getWorkout()
         .then((data) => {
+          setAllCoueses(data)
           for (let item in data) {
             if (data[item]._id === param.id) {
-              setDataCourses(data[item])
+              setDataCourse(data[item])
             }
           }
         })
@@ -35,6 +38,50 @@ export const TrainingPage = ({ courses }) => {
     }, 1000)
     return () => clearTimeout(timer)
   }, [])
+
+  const fillEmptyArray = (num) => {
+    const newArray = []
+    for (let i = 0; i < num; i++) {
+      newArray.push(0)
+    }
+    return newArray
+  }
+
+  const handleClickRecord = () => {
+    const arrayCourses = []
+    courses[dataCourse._id].workout.forEach((item) => {
+      arrayCourses.push(allCourses[item])
+    })
+
+    const patchData = {}
+    arrayCourses.forEach((course) => {
+      const userToAdd = {
+        progress: fillEmptyArray(
+          course.exercises ? course.exercises.length : 1,
+        ),
+        userId: userId,
+      }
+      patchData[`workout/${course.shortId}/users`] = [
+        ...(course.users || []),
+        userToAdd,
+      ]
+    })
+    fetch(
+      'https://skyfitnesspro-workout-default-rtdb.europe-west1.firebasedatabase.app/.json',
+      {
+        method: 'PATCH',
+        body: JSON.stringify(patchData),
+      },
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Ошибка при обновлении данных')
+        }
+        console.log('Данные успешно обновлены')
+        navigate('/profile', { replace: true })
+      })
+      .catch((error) => console.error(error))
+  }
 
   return (
     <div>
@@ -93,9 +140,10 @@ export const TrainingPage = ({ courses }) => {
                 с выбором направления и тренера, с которым тренировки принесут
                 здоровье и радость!
               </S.RecordText>
-              <Link to={'/profile'}>
-                <S.btnRecord>Записаться на тренировку</S.btnRecord>
-              </Link>
+
+              <S.btnRecord onClick={handleClickRecord}>
+                Записаться на тренировку
+              </S.btnRecord>
 
               <S.PhoneImg src="/img/phone.svg" alt="phone" />
             </S.RecordBox>
