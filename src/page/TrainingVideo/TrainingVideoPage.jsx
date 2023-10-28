@@ -36,7 +36,7 @@ export const TrainingVideoPage = () => {
 
   useEffect(() => {
     setProgressPercent(
-      dataPage?.users.find((obj) => obj.userId === userId).progress,
+      dataPage?.users.find((obj) => obj.userId === userId)?.progress,
     )
   }, [dataPage])
 
@@ -73,9 +73,11 @@ export const TrainingVideoPage = () => {
                 >{`${item.name} (${item.times} повторений)`}</S.exerciseItem>
               ))}
             </S.exerciseLists>
-            <S.fillProgress onClick={handleClickFillProgress}>
-              Заполнить свой прогресс
-            </S.fillProgress>
+            {progressPercent && (
+              <S.fillProgress onClick={handleClickFillProgress}>
+                Заполнить свой прогресс
+              </S.fillProgress>
+            )}
           </S.exerciseWrap>
 
           {progressPercent && (
