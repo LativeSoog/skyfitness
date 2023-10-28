@@ -139,7 +139,6 @@ npm run start
 Демонстрация проекта развернута на Netlify
 Ссылка на проект:
 
-```bash
- https://jolly-gaufre-b49c01.netlify.app/
+https://jolly-gaufre-b49c01.netlify.app/
 
-```
+
