@@ -5,29 +5,47 @@ import { useAuth } from '../../hooks/use-auth'
 import { removeUser } from '../../store/slices/userSlice'
 import { useDispatch } from 'react-redux'
 import { getAuth, signOut } from 'firebase/auth'
-import { auth } from '../../firebase'
 
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(true)
+  const [menu, setMenu] = useState(false)
   const [exitForm, setExitForm] = useState(false)
   const { email, login } = useAuth()
 
-  const handleClickExitForm = () => {
+  const handleClickPersonalMenu = () => {
+    setMenu(!menu)
+  }
+  const handleClickExit = () => {
+    setMenu(false)
     document.body.style.overflow = 'hidden'
     setExitForm(true)
+  }
+  const handleClickProfile = () => {
+    setMenu(false)
   }
 
   return (
     <>
       <S.Header>
-        <Link to="/profile">
-          <S.HeaderLogo to={'/'}>
-            <S.HeaderLogoImg src="/img/logo-dark.svg" alt="logo" />
-          </S.HeaderLogo>
-        </Link>
+        <S.HeaderLogo to={'/'}>
+          <S.HeaderLogoImg src="/img/logo-dark.svg" alt="logo" />
+        </S.HeaderLogo>
         {exitForm && <ExitForm setExitForm={setExitForm} />}
         {isLogin ? (
-          <S.Personal onClick={handleClickExitForm}>
+          <S.Personal onClick={handleClickPersonalMenu}>
+            {menu && (
+              <S.PersonalMenu>
+                <Link to={'/profile'}>
+                  <S.PersonalMenuButton onClick={handleClickProfile}>
+                    Профиль
+                  </S.PersonalMenuButton>
+                </Link>
+
+                <S.PersonalMenuButton onClick={handleClickExit}>
+                  Выйти
+                </S.PersonalMenuButton>
+              </S.PersonalMenu>
+            )}
             <img src="/img/avatar.svg" alt="avatar" />
             <S.Name>{login ? login : email}</S.Name>
             <img src="/img/arrow-down.svg" alt="arrow-down" />
@@ -47,11 +65,19 @@ export const Header = () => {
 export const HeaderPurple = ({ nameColor = 'red' }) => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
+  const [menu, setMenu] = useState(false)
   const { email, login } = useAuth()
 
-  const handleClickExitForm = () => {
+  const handleClickPersonalMenu = () => {
+    setMenu(!menu)
+  }
+  const handleClickExit = () => {
+    setMenu(false)
     document.body.style.overflow = 'hidden'
     setExitForm(true)
+  }
+  const handleClickProfile = () => {
+    setMenu(false)
   }
 
   return (
@@ -62,7 +88,20 @@ export const HeaderPurple = ({ nameColor = 'red' }) => {
         </S.HeaderLogo>
         {exitForm && <ExitForm setExitForm={setExitForm} />}
         {isLogin ? (
-          <S.Personal onClick={handleClickExitForm}>
+          <S.Personal onClick={handleClickPersonalMenu}>
+            {menu && (
+              <S.PersonalMenu>
+                <Link to={'/profile'}>
+                  <S.PersonalMenuButton onClick={handleClickProfile}>
+                    Профиль
+                  </S.PersonalMenuButton>
+                </Link>
+
+                <S.PersonalMenuButton onClick={handleClickExit}>
+                  Выйти
+                </S.PersonalMenuButton>
+              </S.PersonalMenu>
+            )}
             <img src="/img/avatar.svg" alt="avatar" />
             <S.NameLight>{login ? login : email}</S.NameLight>
             <img src="/img/arrow-down-light.svg" alt="arrow-down" />
@@ -91,7 +130,7 @@ const ExitForm = ({ setExitForm }) => {
   const handleClickForm = (event) => {
     event.stopPropagation()
   }
-  
+
   const logout = async () => {
     try {
       await signOut(auth)
@@ -99,7 +138,7 @@ const ExitForm = ({ setExitForm }) => {
       console.error(err)
     }
   }
-  
+
   const handleClickLogout = () => {
     document.body.style.overflow = null
     logout()

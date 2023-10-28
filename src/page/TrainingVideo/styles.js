@@ -178,7 +178,6 @@ export const fillProgress = styled.button`
   }
 `
 export const progressBar = styled.section`
-  box-sizing: border-box;
   width: 638px;
   display: flex;
   justify-content: center;
@@ -264,7 +263,6 @@ export const progressBarStatText = styled.p`
   }
 `
 export const progressBarStatPercent = styled.div`
-  box-sizing: border-box;
   position: relative;
   overflow: hidden;
   border: 2px solid rgb(${(props) => props.$rgbCode});
@@ -292,23 +290,21 @@ export const progressBarStatPercent = styled.div`
 
 export const progressBarStatPercentFill = styled.div`
   width: ${(props) => props.$percent}%;
+  height: 100%;
   background: rgb(${(props) => props.$rgbCode});
+  position: relative;
+`
 
-  box-sizing: border-box;
+export const progressBarStatPercentFillNumber = styled.p`
   position: absolute;
-  display: flex;
-
-  align-items: center;
-  justify-content: end;
-  padding-right: 6px;
-  padding-left: 6px;
-
-  color: #fff;
+  top: 0;
+  ${(props) =>
+    props.$percent < 30
+      ? `right: -50px; color: #000;`
+      : `right: 6px; color: #fff;`}
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
-
-  height: 100%;
 
   @media (max-width: 1280px) and (min-width: 1000px) {
     font-size: 18px;

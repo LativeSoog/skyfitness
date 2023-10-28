@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import * as S from './style'
 import { useDispatch } from 'react-redux'
@@ -10,6 +10,40 @@ import {
   reauthenticateWithCredential,
   updatePassword,
 } from 'firebase/auth'
+import { getWorkout } from '../../api'
+
+const courseCards = [
+  {
+    courseId: 'b1',
+    img: '/img/card-course/card-bodyflex1.jpeg',
+    alt: 'card-bodiflex',
+    title: 'Бодифлекс',
+  },
+  {
+    courseId: 'd1',
+    img: '/img/card-course/card-dance1.jpeg',
+    alt: 'card-dance',
+    title: 'Танцевальный фитнес',
+  },
+  {
+    courseId: 'st1',
+    img: '/img/card-course/card-step1.jpeg',
+    alt: 'card-step',
+    title: 'Степ-аэробика',
+  },
+  {
+    courseId: 's1',
+    img: '/img/card-course/card-stretching1.jpeg',
+    alt: 'card-stretching',
+    title: 'Стретчинг',
+  },
+  {
+    courseId: 'y1',
+    img: '/img/card-course/card-yoga1.jpeg',
+    alt: 'card-yoga',
+    title: 'Йога',
+  },
+]
 
 export const ProfilePage = () => {
   const [openEditLogin, setOpenEditLogin] = React.useState(false)
@@ -17,6 +51,9 @@ export const ProfilePage = () => {
   const [openEditPassword, setOpenEditPassword] = React.useState(false)
   const [openWorkoutSelection, setOpenWorkoutSelection] = React.useState(false)
   const { email, login, password } = useAuth()
+  const [dataCourses, setDataCourses] = useState(null)
+
+  const userId = useAuth().id
 
   const handleClickEditLogin = () => {
     document.body.style.overflow = 'hidden'
@@ -31,6 +68,20 @@ export const ProfilePage = () => {
     document.body.style.overflow = 'hidden'
     setOpenWorkoutSelection(true)
   }
+
+  useEffect(() => {
+    const fetchData = () => {
+      getWorkout()
+        .then((data) => {
+          setDataCourses(data)
+        })
+        .catch((error) => {
+          console.error('Error fetching workout data:', error)
+        })
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -67,38 +118,34 @@ export const ProfilePage = () => {
 
       <S.CourseBlock>
         <S.Title>Мои курсы</S.Title>
-        <S.CourseItems>
-          <S.Item>
-            <S.ItemImg src="img/card-course/card-yoga1.jpeg" alt="card-yoga" />
-            <S.ItemTitle>Йога</S.ItemTitle>
-            <S.GreenButton onClick={handleClickGreenButton}>
-              Перейти
-            </S.GreenButton>
-          </S.Item>
-
-          <S.Item>
-            <S.ItemImg
-              src="img/card-course/card-stretching1.jpeg"
-              alt="card-yoga"
-            />
-            <S.ItemTitle>Стретчинг</S.ItemTitle>
-            <S.GreenButton onClick={handleClickGreenButton}>
-              Перейти
-            </S.GreenButton>
-          </S.Item>
-
-          <S.Item>
-            <S.ItemImg
-              src="img/card-course/card-bodyflex1.jpeg"
-              alt="card-yoga"
-            />
-            <S.ItemTitle>Бодифлекс</S.ItemTitle>
-            <S.GreenButton onClick={handleClickGreenButton}>
-              Перейти
-            </S.GreenButton>
-          </S.Item>
-        </S.CourseItems>
+        {dataCourses ? (
+          <S.CourseItems>
+            {courseCards.map((item, index) => {
+              if (
+                dataCourses[item.courseId].users.find(
+                  (obj) => obj.userId === userId,
+                )
+              ) {
+                return (
+                  <S.Item key={index}>
+                    <S.ItemImg src={item.img} alt={item.alt} />
+                    <S.ItemTitle>{item.title}</S.ItemTitle>
+                    <S.GreenButton onClick={handleClickGreenButton}>
+                      Перейти
+                    </S.GreenButton>
+                  </S.Item>
+                )
+              }
+            })}
+          </S.CourseItems>
+        ) : (
+          // тут должен быть скелетон
+          <h1>Загрузка...</h1>
+        )}
       </S.CourseBlock>
+      <Link to={'/'}>
+        <S.viewAllCourses>Все курсы</S.viewAllCourses>
+      </Link>
     </>
   )
 }

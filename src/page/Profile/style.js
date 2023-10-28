@@ -172,11 +172,8 @@ export const CourseBlock = styled.div`
 export const CourseItems = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: start;
   gap: 20px;
-  @media (max-width: 1180px) {
-    justify-content: start;
-  }
 
   @media (max-width: 480px) {
     gap: 20px;
@@ -201,6 +198,10 @@ export const ItemTitle = styled.h2`
   font-size: 36px;
   top: 30px;
   left: 30px;
+
+  @media (max-width: 800px) {
+    font-size: 20px;
+  }
 `
 
 export const ItemImg = styled.img`
@@ -358,4 +359,25 @@ export const closeWindow = styled.img`
   right: 15px;
   cursor: pointer;
   width: 15px;
+`
+export const viewAllCourses = styled.button`
+  margin-top: 30px;
+  width: fit-content;
+  border: 0;
+  border-radius: 46px;
+  padding: 12px 41px;
+  background-color: #580ea2;
+  color: #fff;
+  font-size: 18px;
+
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #3f007d;
+  }
+  &:active {
+    background-color: #271a58;
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
 `

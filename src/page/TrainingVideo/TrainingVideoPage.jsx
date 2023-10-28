@@ -5,7 +5,7 @@ import { getWorkout } from '../../api'
 // количество раз, которое сделал юзер (позже нужно будет вставить из базы юзера)
 // все проценты и прогрессы высчитываются и отрисовываются автоматически
 const progressPercent = {
-  0: '5',
+  0: '2',
   1: '8',
   2: '4',
 }
@@ -99,9 +99,13 @@ export const TrainingVideoPage = () => {
                       $percent={(progressPercent[index] * 100) / item.times}
                       $rgbCode={colors[index]}
                     >
-                      {`${Math.round(
-                        (progressPercent[index] * 100) / item.times,
-                      )}%`}
+                      <S.progressBarStatPercentFillNumber
+                        $percent={(progressPercent[index] * 100) / item.times}
+                      >
+                        {`${Math.round(
+                          (progressPercent[index] * 100) / item.times,
+                        )}%`}
+                      </S.progressBarStatPercentFillNumber>
                     </S.progressBarStatPercentFill>
                   </S.progressBarStatPercent>
                 </S.progressBarStat>
