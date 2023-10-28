@@ -2,14 +2,8 @@ import { useEffect, useState } from 'react'
 import * as S from './styles'
 import { getWorkout } from '../../api'
 import { useParams } from 'react-router-dom'
+import { useAuth } from '../../hooks/use-auth'
 
-// количество раз, которое сделал юзер (позже нужно будет вставить из базы юзера)
-// все проценты и прогрессы высчитываются и отрисовываются автоматически
-const progressPercent = {
-  0: '2',
-  1: '8',
-  2: '4',
-}
 // чтобы прогресс бары были разными цветами
 const colors = [
   '86, 94, 239',
@@ -18,12 +12,13 @@ const colors = [
   '101, 197, 5',
   '210 16 225',
 ]
-
 export const TrainingVideoPage = () => {
   const [progressForm, setProgressForm] = useState(false)
   const [dataPage, setDataPage] = useState(null)
+  const [progressPercent, setProgressPercent] = useState(null)
 
   const currentPage = useParams().id
+  const userId = useAuth().id
 
   useEffect(() => {
     const fetchData = () => {
@@ -38,6 +33,12 @@ export const TrainingVideoPage = () => {
 
     fetchData()
   }, [])
+
+  useEffect(() => {
+    setProgressPercent(
+      dataPage?.users.find((obj) => obj.userId === userId).progress,
+    )
+  }, [dataPage])
 
   const handleClickFillProgress = () => {
     document.body.style.overflow = 'hidden'
@@ -77,32 +78,34 @@ export const TrainingVideoPage = () => {
             </S.fillProgress>
           </S.exerciseWrap>
 
-          <S.progressBar>
-            <S.progressBarText>
-              Мой прогресс по тренировке {dataPage.number}:
-            </S.progressBarText>
-            <S.progressBarStats>
-              {dataPage.exercises.map((item, index) => (
-                <S.progressBarStat key={index}>
-                  <S.progressBarStatText>{item.name}</S.progressBarStatText>
-                  <S.progressBarStatPercent $rgbCode={colors[index]}>
-                    <S.progressBarStatPercentFill
-                      $percent={(progressPercent[index] * 100) / item.times}
-                      $rgbCode={colors[index]}
-                    >
-                      <S.progressBarStatPercentFillNumber
+          {progressPercent && (
+            <S.progressBar>
+              <S.progressBarText>
+                Мой прогресс по тренировке {dataPage.number}:
+              </S.progressBarText>
+              <S.progressBarStats>
+                {dataPage.exercises.map((item, index) => (
+                  <S.progressBarStat key={index}>
+                    <S.progressBarStatText>{item.name}</S.progressBarStatText>
+                    <S.progressBarStatPercent $rgbCode={colors[index]}>
+                      <S.progressBarStatPercentFill
                         $percent={(progressPercent[index] * 100) / item.times}
+                        $rgbCode={colors[index]}
                       >
-                        {`${Math.round(
-                          (progressPercent[index] * 100) / item.times,
-                        )}%`}
-                      </S.progressBarStatPercentFillNumber>
-                    </S.progressBarStatPercentFill>
-                  </S.progressBarStatPercent>
-                </S.progressBarStat>
-              ))}
-            </S.progressBarStats>
-          </S.progressBar>
+                        <S.progressBarStatPercentFillNumber
+                          $percent={(progressPercent[index] * 100) / item.times}
+                        >
+                          {`${Math.round(
+                            (progressPercent[index] * 100) / item.times,
+                          )}%`}
+                        </S.progressBarStatPercentFillNumber>
+                      </S.progressBarStatPercentFill>
+                    </S.progressBarStatPercent>
+                  </S.progressBarStat>
+                ))}
+              </S.progressBarStats>
+            </S.progressBar>
+          )}
         </S.exercise>
       )}
     </S.videoPage>

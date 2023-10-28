@@ -16,9 +16,9 @@ const courseCards = [
   {
     courseId: 'b1',
     img: '/img/card-course/card-bodyflex1.jpeg',
-    alt: 'card-bodiflex',
+    alt: 'card-bodyflex',
     title: 'Бодифлекс',
-    block: 'bodiflex1',
+    block: 'bodyflex1',
   },
   {
     courseId: 'd1',
