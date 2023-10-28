@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as S from './styles'
 import { getWorkout } from '../../api'
+import { useParams } from 'react-router-dom'
 
 // количество раз, которое сделал юзер (позже нужно будет вставить из базы юзера)
 // все проценты и прогрессы высчитываются и отрисовываются автоматически
@@ -9,18 +10,6 @@ const progressPercent = {
   1: '8',
   2: '4',
 }
-
-// это нужно передать ключем на эту страницу, в зависимости от ключа будет меняться и содержимое страницы автоматически
-// можно потестить, вот список
-// b1 b2 b3
-// d1 d2 d3 d4 d5
-// s1 s2 s3
-// st1 st2 st3 st4
-// y1 y2 y3 y4 y5
-// пока не работают (не обновлены в базе s1 s2 s3 y1 y3 y4 y5)
-
-const currentPage = 'y2'
-
 // чтобы прогресс бары были разными цветами
 const colors = [
   '86, 94, 239',
@@ -33,6 +22,8 @@ const colors = [
 export const TrainingVideoPage = () => {
   const [progressForm, setProgressForm] = useState(false)
   const [dataPage, setDataPage] = useState(null)
+
+  const currentPage = useParams().id
 
   useEffect(() => {
     const fetchData = () => {

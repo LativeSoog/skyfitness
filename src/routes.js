@@ -19,7 +19,7 @@ export const AppRoutes = ({ courses }) => {
           path="/courses/:id"
           element={<TrainingPage courses={courses} />}
         />
-        <Route path="/training-video" element={<TrainingVideoPage />} />
+        <Route path="/training-video/:id" element={<TrainingVideoPage />} />
         <Route path="/profile" element={<ProfilePage courses={courses} />} />
       </Route>
       <Route path="/signup" element={<SignUpPage />} />

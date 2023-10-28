@@ -380,9 +380,15 @@ const WorkoutSelectionForm = ({
         <S.TitleWorkout>Выберите тренировку</S.TitleWorkout>
         <S.ListWorkout>
           {currentCourseBlock.map((item, index) => (
-            <S.WorkoutItem key={index}>
-              <S.WorkoutName>{item.name}</S.WorkoutName>
-            </S.WorkoutItem>
+            <Link
+              onClick={handleClickLink}
+              to={`/training-video/${item.shortId}`}
+              key={index}
+            >
+              <S.WorkoutItem>
+                <S.WorkoutName>{item.name}</S.WorkoutName>
+              </S.WorkoutItem>
+            </Link>
           ))}
         </S.ListWorkout>
       </S.PopupWorkout>
