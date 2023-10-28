@@ -312,3 +312,7 @@ export const PhoneImg = styled.img`
     display: none;
   }
 `
+export const Direct = styled.ul`
+  list-style-position: inside;
+  -webkit-column-count: 2;
+`
