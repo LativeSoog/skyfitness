@@ -47,10 +47,39 @@ export const HeaderButton = styled.button`
 export const HeaderButtonLink = styled(Link)``
 
 export const Personal = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 15px;
   cursor: pointer;
+`
+
+export const PersonalMenu = styled.div`
+  position: absolute;
+  width: fit-content;
+  overflow: hidden;
+  background: #fff;
+  border: 2px solid #000;
+  top: 50px;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+
+  border-radius: 10px;
+  z-index: 100;
+`
+export const PersonalMenuButton = styled.button`
+  border: 0;
+  width: 100%;
+  padding: 10px;
+  background: none;
+  font-size: 18px;
+
+  &:hover {
+    background: #e5e5e5;
+  }
 `
 
 export const Name = styled.p`

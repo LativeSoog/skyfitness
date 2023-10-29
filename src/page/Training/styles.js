@@ -276,6 +276,7 @@ export const RecordText = styled.p`
   }
 `
 export const btnRecord = styled.button`
+  width: fit-content;
   border-radius: 46px;
   background: #580ea2;
   margin-top: 34px;
@@ -315,4 +316,33 @@ export const PhoneImg = styled.img`
 export const Direct = styled.ul`
   list-style-position: inside;
   -webkit-column-count: 2;
+`
+export const goToProfile = styled.button`
+  border-radius: 46px;
+  background: #580ea2;
+  margin-top: 34px;
+  border: 0;
+  padding: 12px 24px;
+
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.05px;
+
+  :hover {
+    background: #3f007d;
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  @media (max-width: 425px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
 `

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import * as S from './style'
 import { useDispatch } from 'react-redux'
@@ -10,13 +10,56 @@ import {
   reauthenticateWithCredential,
   updatePassword,
 } from 'firebase/auth'
+import { getWorkout } from '../../api'
 
-export const ProfilePage = () => {
+const courseCards = [
+  {
+    courseId: 'b1',
+    img: '/img/card-course/card-bodyflex1.jpeg',
+    alt: 'card-bodyflex',
+    title: 'Бодифлекс',
+    block: 'bodyflex1',
+  },
+  {
+    courseId: 'd1',
+    img: '/img/card-course/card-dance1.jpeg',
+    alt: 'card-dance',
+    title: 'Танцевальный фитнес',
+    block: 'dance1',
+  },
+  {
+    courseId: 'st1',
+    img: '/img/card-course/card-step1.jpeg',
+    alt: 'card-step',
+    title: 'Степ-аэробика',
+    block: 'step1',
+  },
+  {
+    courseId: 's1',
+    img: '/img/card-course/card-stretching1.jpeg',
+    alt: 'card-stretching',
+    title: 'Стретчинг',
+    block: 'stretching1',
+  },
+  {
+    courseId: 'y1',
+    img: '/img/card-course/card-yoga1.jpeg',
+    alt: 'card-yoga',
+    title: 'Йога',
+    block: 'yoga1',
+  },
+]
+
+export const ProfilePage = ({ courses }) => {
   const [openEditLogin, setOpenEditLogin] = React.useState(false)
   const [openFormOldPassword, setOpenFormOldPassword] = React.useState(false)
   const [openEditPassword, setOpenEditPassword] = React.useState(false)
   const [openWorkoutSelection, setOpenWorkoutSelection] = React.useState(false)
   const { email, login, password } = useAuth()
+  const [dataCourses, setDataCourses] = useState(null)
+  const [currentCourseBlock, setCurrentCourseBlock] = useState(null)
+
+  const userId = useAuth().id
 
   const handleClickEditLogin = () => {
     document.body.style.overflow = 'hidden'
@@ -27,10 +70,29 @@ export const ProfilePage = () => {
     setOpenFormOldPassword(true)
   }
 
-  const handleClickGreenButton = () => {
+  const handleClickGreenButton = (courseBlock) => {
     document.body.style.overflow = 'hidden'
     setOpenWorkoutSelection(true)
+    const exersicesCourse = []
+    courses[courseBlock].workout.forEach((item) => {
+      exersicesCourse.push(dataCourses[item])
+    })
+    setCurrentCourseBlock(exersicesCourse)
   }
+
+  useEffect(() => {
+    const fetchData = () => {
+      getWorkout()
+        .then((data) => {
+          setDataCourses(data)
+        })
+        .catch((error) => {
+          console.error('Error fetching workout data:', error)
+        })
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -46,6 +108,7 @@ export const ProfilePage = () => {
       )}
       {openWorkoutSelection && (
         <WorkoutSelectionForm
+          currentCourseBlock={currentCourseBlock}
           setOpenWorkoutSelection={setOpenWorkoutSelection}
         />
       )}
@@ -67,38 +130,36 @@ export const ProfilePage = () => {
 
       <S.CourseBlock>
         <S.Title>Мои курсы</S.Title>
-        <S.CourseItems>
-          <S.Item>
-            <S.ItemImg src="img/card-course/card-yoga1.jpeg" alt="card-yoga" />
-            <S.ItemTitle>Йога</S.ItemTitle>
-            <S.GreenButton onClick={handleClickGreenButton}>
-              Перейти
-            </S.GreenButton>
-          </S.Item>
-
-          <S.Item>
-            <S.ItemImg
-              src="img/card-course/card-stretching1.jpeg"
-              alt="card-yoga"
-            />
-            <S.ItemTitle>Стретчинг</S.ItemTitle>
-            <S.GreenButton onClick={handleClickGreenButton}>
-              Перейти
-            </S.GreenButton>
-          </S.Item>
-
-          <S.Item>
-            <S.ItemImg
-              src="img/card-course/card-bodyflex1.jpeg"
-              alt="card-yoga"
-            />
-            <S.ItemTitle>Бодифлекс</S.ItemTitle>
-            <S.GreenButton onClick={handleClickGreenButton}>
-              Перейти
-            </S.GreenButton>
-          </S.Item>
-        </S.CourseItems>
+        {dataCourses ? (
+          <S.CourseItems>
+            {courseCards.map((item, index) => {
+              if (
+                dataCourses[item.courseId].users.find(
+                  (obj) => obj.userId === userId,
+                )
+              ) {
+                return (
+                  <S.Item key={index}>
+                    <S.ItemImg src={item.img} alt={item.alt} />
+                    <S.ItemTitle>{item.title}</S.ItemTitle>
+                    <S.GreenButton
+                      onClick={() => handleClickGreenButton(item.block)}
+                    >
+                      Перейти
+                    </S.GreenButton>
+                  </S.Item>
+                )
+              }
+            })}
+          </S.CourseItems>
+        ) : (
+          // тут должен быть скелетон
+          <h1>Загрузка...</h1>
+        )}
       </S.CourseBlock>
+      <Link to={'/'}>
+        <S.viewAllCourses>Все курсы</S.viewAllCourses>
+      </Link>
     </>
   )
 }
@@ -294,12 +355,14 @@ const NewPasswordForm = ({ setOpenEditPassword }) => {
   )
 }
 
-const WorkoutSelectionForm = ({ setOpenWorkoutSelection }) => {
+const WorkoutSelectionForm = ({
+  setOpenWorkoutSelection,
+  currentCourseBlock,
+}) => {
   const closeWindow = () => {
     document.body.style.overflow = null
     setOpenWorkoutSelection(false)
   }
-
   const handleClickBlackout = () => {
     closeWindow()
   }
@@ -309,37 +372,25 @@ const WorkoutSelectionForm = ({ setOpenWorkoutSelection }) => {
   const handleClickLink = () => {
     document.body.style.overflow = null
   }
+
   return (
     <S.BlackoutWrapper onClick={handleClickBlackout}>
       <S.PopupWorkout onClick={(event) => handleClickForm(event)}>
         <S.closeWindow src="/img/close.svg" onClick={closeWindow} />
         <S.TitleWorkout>Выберите тренировку</S.TitleWorkout>
-        <Link onClick={handleClickLink} to="/training-video">
-          <S.ListWorkout>
-            <S.WorkoutItem $active>
-              <S.WorkoutName>Утренняя практика</S.WorkoutName>
-              <S.WorkoutImg src="img/icon-done.svg" alt="done" />
-              <S.WorkoutText>Йога на каждый день / 1 день </S.WorkoutText>
-            </S.WorkoutItem>
-            <S.WorkoutItem $active>
-              <S.WorkoutName>Красота и здоровье</S.WorkoutName>
-              <S.WorkoutImg src="img/icon-done.svg" alt="done" />
-              <S.WorkoutText>Йога на каждый день / 2 день </S.WorkoutText>
-            </S.WorkoutItem>
-            <S.WorkoutItem>
-              <S.WorkoutName>Асаны стоя</S.WorkoutName>
-              <S.WorkoutText>Йога на каждый день / 3 день </S.WorkoutText>
-            </S.WorkoutItem>
-            <S.WorkoutItem>
-              <S.WorkoutName>Растягиваем мышцы бедра</S.WorkoutName>
-              <S.WorkoutText>Йога на каждый день / 4 день </S.WorkoutText>
-            </S.WorkoutItem>
-            <S.WorkoutItem>
-              <S.WorkoutName>Гибкость спины</S.WorkoutName>
-              <S.WorkoutText>Йога на каждый день / 5 день </S.WorkoutText>
-            </S.WorkoutItem>
-          </S.ListWorkout>
-        </Link>
+        <S.ListWorkout>
+          {currentCourseBlock.map((item, index) => (
+            <Link
+              onClick={handleClickLink}
+              to={`/training-video/${item.shortId}`}
+              key={index}
+            >
+              <S.WorkoutItem>
+                <S.WorkoutName>{item.name}</S.WorkoutName>
+              </S.WorkoutItem>
+            </Link>
+          ))}
+        </S.ListWorkout>
       </S.PopupWorkout>
     </S.BlackoutWrapper>
   )

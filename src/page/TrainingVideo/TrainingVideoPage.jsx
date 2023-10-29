@@ -1,25 +1,8 @@
 import { useEffect, useState } from 'react'
 import * as S from './styles'
 import { getWorkout } from '../../api'
-
-// количество раз, которое сделал юзер (позже нужно будет вставить из базы юзера)
-// все проценты и прогрессы высчитываются и отрисовываются автоматически
-const progressPercent = {
-  0: '5',
-  1: '8',
-  2: '4',
-}
-
-// это нужно передать ключем на эту страницу, в зависимости от ключа будет меняться и содержимое страницы автоматически
-// можно потестить, вот список
-// b1 b2 b3
-// d1 d2 d3 d4 d5
-// s1 s2 s3
-// st1 st2 st3 st4
-// y1 y2 y3 y4 y5
-// пока не работают (не обновлены в базе s1 s2 s3 y1 y3 y4 y5)
-
-const currentPage = 'y2'
+import { useParams } from 'react-router-dom'
+import { useAuth } from '../../hooks/use-auth'
 
 // чтобы прогресс бары были разными цветами
 const colors = [
@@ -29,10 +12,13 @@ const colors = [
   '101, 197, 5',
   '210 16 225',
 ]
-
 export const TrainingVideoPage = () => {
   const [progressForm, setProgressForm] = useState(false)
   const [dataPage, setDataPage] = useState(null)
+  const [progressPercent, setProgressPercent] = useState(null)
+
+  const userId = useAuth().id
+  const currentPage = useParams().id
 
   useEffect(() => {
     const fetchData = () => {
@@ -46,7 +32,13 @@ export const TrainingVideoPage = () => {
     }
 
     fetchData()
-  }, [])
+  }, [currentPage])
+
+  useEffect(() => {
+    setProgressPercent(
+      dataPage?.users.find((obj) => obj.userId === userId)?.progress,
+    )
+  }, [dataPage])
 
   const handleClickFillProgress = () => {
     document.body.style.overflow = 'hidden'
@@ -62,7 +54,11 @@ export const TrainingVideoPage = () => {
   return dataPage ? (
     <S.videoPage>
       {progressForm && (
-        <ProgressForm setProgressForm={setProgressForm} dataPage={dataPage} />
+        <ProgressForm
+          setProgressForm={setProgressForm}
+          dataPage={dataPage}
+          userId={userId}
+        />
       )}
       <S.videoPageTitle>{dataPage.title}</S.videoPageTitle>
       <S.breadcrumbs>{dataPage.name}</S.breadcrumbs>
@@ -81,33 +77,41 @@ export const TrainingVideoPage = () => {
                 >{`${item.name} (${item.times} повторений)`}</S.exerciseItem>
               ))}
             </S.exerciseLists>
-            <S.fillProgress onClick={handleClickFillProgress}>
-              Заполнить свой прогресс
-            </S.fillProgress>
+            {progressPercent && (
+              <S.fillProgress onClick={handleClickFillProgress}>
+                Заполнить свой прогресс
+              </S.fillProgress>
+            )}
           </S.exerciseWrap>
 
-          <S.progressBar>
-            <S.progressBarText>
-              Мой прогресс по тренировке {dataPage.number}:
-            </S.progressBarText>
-            <S.progressBarStats>
-              {dataPage.exercises.map((item, index) => (
-                <S.progressBarStat key={index}>
-                  <S.progressBarStatText>{item.name}</S.progressBarStatText>
-                  <S.progressBarStatPercent $rgbCode={colors[index]}>
-                    <S.progressBarStatPercentFill
-                      $percent={(progressPercent[index] * 100) / item.times}
-                      $rgbCode={colors[index]}
-                    >
-                      {`${Math.round(
-                        (progressPercent[index] * 100) / item.times,
-                      )}%`}
-                    </S.progressBarStatPercentFill>
-                  </S.progressBarStatPercent>
-                </S.progressBarStat>
-              ))}
-            </S.progressBarStats>
-          </S.progressBar>
+          {progressPercent && (
+            <S.progressBar>
+              <S.progressBarText>
+                Мой прогресс по тренировке {dataPage.number}:
+              </S.progressBarText>
+              <S.progressBarStats>
+                {dataPage.exercises.map((item, index) => (
+                  <S.progressBarStat key={index}>
+                    <S.progressBarStatText>{item.name}</S.progressBarStatText>
+                    <S.progressBarStatPercent $rgbCode={colors[index]}>
+                      <S.progressBarStatPercentFill
+                        $percent={(progressPercent[index] * 100) / item.times}
+                        $rgbCode={colors[index]}
+                      >
+                        <S.progressBarStatPercentFillNumber
+                          $percent={(progressPercent[index] * 100) / item.times}
+                        >
+                          {`${Math.round(
+                            (progressPercent[index] * 100) / item.times,
+                          )}%`}
+                        </S.progressBarStatPercentFillNumber>
+                      </S.progressBarStatPercentFill>
+                    </S.progressBarStatPercent>
+                  </S.progressBarStat>
+                ))}
+              </S.progressBarStats>
+            </S.progressBar>
+          )}
         </S.exercise>
       )}
     </S.videoPage>
@@ -117,8 +121,9 @@ export const TrainingVideoPage = () => {
   )
 }
 
-const ProgressForm = ({ setProgressForm, dataPage }) => {
+const ProgressForm = ({ setProgressForm, dataPage, userId }) => {
   const [done, setDone] = useState(false)
+  const progressArray = []
 
   const closeForm = () => {
     document.body.style.overflow = null
@@ -135,13 +140,37 @@ const ProgressForm = ({ setProgressForm, dataPage }) => {
     event.stopPropagation()
   }
 
+  const handleChangeInput = (event, index) => {
+    progressArray[index] = event.target.value
+  }
+
   const handleClickSubmit = (event) => {
     event.preventDefault()
-    setDone(true)
-    setTimeout(() => {
-      setDone(false)
-      closeForm()
-    }, 1500)
+
+    const newArrayUsers = [...dataPage.users]
+    newArrayUsers.find((obj) => obj.userId === userId).progress = progressArray
+
+    const patchData = {}
+    patchData[`workout/${dataPage.shortId}/users`] = newArrayUsers
+
+    fetch(
+      'https://skyfitnesspro-workout-default-rtdb.europe-west1.firebasedatabase.app/.json',
+      {
+        method: 'PATCH',
+        body: JSON.stringify(patchData),
+      },
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error('Ошибка при обновлении данных на сервере')
+      }
+      console.log('Данные успешно обновлены на сервере')
+      setDone(true)
+      setTimeout(() => {
+        setDone(false)
+        closeForm()
+        window.location.reload()
+      }, 1500)
+    })
   }
   // без валидации
   return (
@@ -160,6 +189,7 @@ const ProgressForm = ({ setProgressForm, dataPage }) => {
                     {`Сколько раз вы сделали ${item.name.toLowerCase()}?`}
                   </S.progressFormInputText>
                   <S.progressFormInput
+                    onChange={(event) => handleChangeInput(event, index)}
                     type="number"
                     name="quantity"
                     min="0"
