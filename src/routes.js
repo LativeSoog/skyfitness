@@ -12,9 +12,9 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 export const AppRoutes = ({ courses }) => {
   return (
     <Routes>
+      <Route element={<ProtectedRoute redirectPath={'/login'} />}>
       <Route index element={<MainPage courses={courses} />} />
       <Route path="/" element={<PageLayout />}>
-        <Route path="*" element={<NotFoundPage />} />
         <Route
           path="/courses/:id"
           element={<TrainingPage courses={courses} />}
@@ -24,16 +24,7 @@ export const AppRoutes = ({ courses }) => {
       </Route>
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/login" element={<LoginPage />} />
-
-      <Route element={<ProtectedRoute redirectPath={'/login'} />}>
-        <Route index element={<MainPage />} />
-        <Route path="/" element={<PageLayout />}>
-          <Route path="/training" element={<TrainingPage />} />
-          <Route path="/training-video" element={<TrainingVideoPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-        </Route>
       </Route>
-
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
