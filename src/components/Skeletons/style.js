@@ -89,7 +89,7 @@ export const RecordBox = styled.div`
   height: 300px;
   flex-shrink: 0;
   border-radius: 30px;
-  background: #f9ebff;
+  background: #aaa1ad;
   position: relative;
   display: flex;
   justify-content: flex-end;
