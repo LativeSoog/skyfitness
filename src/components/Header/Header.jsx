@@ -62,7 +62,7 @@ export const Header = () => {
   )
 }
 
-export const HeaderPurple = ({ nameColor = 'red' }) => {
+export const HeaderPurple = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [exitForm, setExitForm] = useState(false)
   const [menu, setMenu] = useState(false)

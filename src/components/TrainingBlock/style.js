@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const SectionTraining = styled(Link)`
+export const SectionTraining = styled.div`
   position: relative;
   transition: transform 0.3s ease-in-out;
   &:hover {

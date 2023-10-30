@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom'
 import * as S from './styles.js'
 import { useEffect, useState } from 'react'
 
@@ -7,8 +6,7 @@ export default function AuthPage({ isLoginChange = false }) {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
-  const [disable, setDisable] = useState(false)
-  let navigate = useNavigate()
+  const [disable] = useState(false)
 
   const handleLoginChange = async () => {
     if (!login) {

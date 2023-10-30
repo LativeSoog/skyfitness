@@ -19,16 +19,3 @@ export async function getWorkout() {
   const data = await response.json()
   return data
 }
-
-export async function getUsers() {
-  const response = await fetch(
-    'https://skyfitnesspro-workout-default-rtdb.europe-west1.firebasedatabase.app/users.json',
-  ).catch((error) => {
-    throw new Error(
-      'Не удалось загрузить список пользователя, попробуйте позже',
-    )
-  })
-
-  const data = await response.json()
-  return data
-}
