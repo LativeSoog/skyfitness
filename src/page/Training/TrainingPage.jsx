@@ -20,10 +20,12 @@ export const TrainingPage = ({ courses }) => {
     const fetchData = () => {
       getWorkout()
         .then((data) => {
-          setAllCoueses(data)
+          setAllCoueses(data);
+          setIsLoading(false);
           for (let item in data) {
             if (data[item]._id === param.id) {
-              setDataCourse(data[item])
+              setDataCourse(data[item]);
+              setIsLoading(false);
             }
           }
         })
@@ -32,11 +34,6 @@ export const TrainingPage = ({ courses }) => {
         })
     }
     fetchData()
-
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
-    return () => clearTimeout(timer)
   }, [])
 
   const fillEmptyArray = (num) => {
