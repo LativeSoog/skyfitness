@@ -1,15 +1,29 @@
+import React from 'react'
 import * as S from './style'
 import { Header } from '../Header/Header'
 import { Outlet } from 'react-router-dom'
+import { HeaderSkeleton } from '../../components/Skeletons/HeaderSkeleton';
 
 export const PageLayout = () => {
-  return (
-    <S.Wrapper>
-      <S.Container>
-        <Header />
+  const [isLoading, setIsLoading] = React.useState(true);
 
-        <Outlet />
-      </S.Container>
-    </S.Wrapper>
-  )
-}
+React.useEffect(() => {
+  const timer = setTimeout(() => {
+    setIsLoading(false);
+  }, 300);
+  
+  return () => clearTimeout(timer);
+}, []);
+
+return (
+  <S.Wrapper>
+    <S.Container>
+      {isLoading ? (
+        <HeaderSkeleton />
+      ) : (
+        <Header/>
+      )}
+      <Outlet />
+    </S.Container>
+  </S.Wrapper>
+)  }

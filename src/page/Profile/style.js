@@ -1,38 +1,5 @@
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
-  box-sizing: border-box;
-  padding: 0 30px;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 94px;
-  @media (max-width: 768px) {
-    margin-bottom: 40px;
-  }
-`
-export const Container = styled.div`
-  max-width: 1440px;
-  height: 100vh;
-  margin: 0 auto;
-  padding: 0 140px;
-
-  @media (max-width: 768px) {
-    padding: 0 30px;
-  }
-`
-
-export const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 30px 0;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    row-gap: 20px;
-  }
-`
-
 export const Personal = styled.div`
   display: flex;
   align-items: center;
@@ -45,6 +12,7 @@ export const Name = styled.p`
 `
 
 export const ProfileBlock = styled.div`
+  margin-top: 75px;
   display: flex;
   flex-direction: column;
 `
@@ -54,9 +22,11 @@ export const Title = styled.h1`
   font-size: 48px;
   color: #000;
   @media (max-width: 768px) {
+    margin-bottom: 20px;
     font-size: 36px;
   }
   @media (max-width: 480px) {
+    margin-bottom: 15px;
     font-size: 24px;
   }
 `
@@ -68,30 +38,40 @@ export const TextInfo = styled.p`
   font-size: 24px;
   color: #000;
   @media (max-width: 768px) {
+    margin-bottom: 12px;
     font-size: 20px;
   }
   @media (max-width: 480px) {
+    margin-bottom: 8px;
     font-size: 16px;
   }
 `
 
 export const ButtonBlock = styled.div`
+  width: fit-content;
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
-  margin-bottom: 61px;
+  gap: 14px;
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    margin-top: 15px;
+  }
+  @media (max-width: 480px) {
+    margin-top: 12px;
+    gap: 8px;
+  }
 `
 
 export const Button = styled.button`
-  width: 275px;
-  height: 52px;
-  border: none;
+  width: 100%;
+  border: 0;
   border-radius: 46px;
-  padding: 12px 43px;
+  padding: 12px 41px;
   background-color: #580ea2;
   color: #fff;
   font-size: 18px;
-  margin-bottom: 15px;
+
   transition: background-color 0.2s ease-in-out;
   &:hover {
     background-color: #3f007d;
@@ -104,9 +84,7 @@ export const Button = styled.button`
   }
   @media (max-width: 480px) {
     font-size: 12px;
-    width: 150px;
-    height: 36px;
-    padding: 0 15px;
+    padding: 8px 15px;
   }
 `
 
@@ -114,9 +92,8 @@ export const WarningMessage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 275px;
-  height: 52px;
-  margin-bottom: 15px;
+  padding: 12px 25px;
+  width: 100%;
   color: tomato;
   border: 0;
   border-radius: 46px;
@@ -131,14 +108,9 @@ export const WarningMessage = styled.div`
 `
 
 export const PopupLogin = styled.div`
-  --modal-width: 366px;
-  --modal-height: 331px;
-  position: absolute;
-  left: calc(50% - (var(--modal-width) / 2));
-  top: calc(50% - (var(--modal-height) / 2));
-  box-sizing: border-box;
-  width: var(--modal-width);
-  min-height: var(--modal-height);
+  position: relative;
+  width: fit-content;
+  height: fit-content;
   border: 1px solid #d0cece;
   border-radius: 12px;
   padding: 33px 47px 47px 41px;
@@ -190,17 +162,19 @@ export const Input = styled.input`
 `
 
 export const PopupPassword = styled(PopupLogin)`
-  height: 481px;
+  height: fit-content;
 `
 
 export const CourseBlock = styled.div`
-  padding-bottom: 200px;
+  margin-top: 61px;
 `
 
 export const CourseItems = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  justify-content: start;
+  gap: 20px;
+
   @media (max-width: 480px) {
     gap: 20px;
     justify-content: center;
@@ -214,6 +188,9 @@ export const Item = styled.div`
   &:hover {
     transform: translateY(-5px);
   }
+  @media (max-width: 620px) {
+    width: 100%;
+  }
 `
 
 export const ItemTitle = styled.h2`
@@ -221,6 +198,10 @@ export const ItemTitle = styled.h2`
   font-size: 36px;
   top: 30px;
   left: 30px;
+
+  @media (max-width: 800px) {
+    font-size: 20px;
+  }
 `
 
 export const ItemImg = styled.img`
@@ -229,13 +210,13 @@ export const ItemImg = styled.img`
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 800px) {
     width: 270px;
     height: 360px;
   }
-  @media (max-width: 480px) {
-    width: 210px;
-    height: 280px;
+  @media (max-width: 620px) {
+    width: 100%;
+    height: auto;
   }
 `
 export const GreenButton = styled.button`
@@ -278,31 +259,16 @@ export const BlackoutWrapper = styled.div`
 `
 
 export const PopupWorkout = styled.div`
-  --modal-width: 444;
-  --modal-height: 626;
-  position: absolute;
-  left: calc(50% - (var(--modal-width) / 2));
-  top: calc(50% - (var(--modal-height) / 2));
-  box-sizing: border-box;
-  width: var(--modal-width);
-  min-height: var(--modal-height);
+  position: relative;
+  width: fit-content;
+  height: fit-content;
   border-radius: 12px;
-  padding: 36px 54px 58px 54px;
+  padding: 54px 36px;
   border: 1px solid #d0cece;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  @media (max-width: 768px) {
-    width: 330px;
-    height: 495px;
-    padding: 20px;
-  }
-  @media (max-width: 480px) {
-    width: 220px;
-    height: 300px;
-    padding: 12px;
-  }
 `
 
 export const TitleWorkout = styled.h2`
@@ -321,23 +287,25 @@ export const TitleWorkout = styled.h2`
 export const ListWorkout = styled.ul`
   list-style-type: none;
   overflow: auto;
-  margin-bottom: 20px;
-  @media (max-width: 768px) {
-    margin-bottom: 15px;
-  }
-  @media (max-width: 480px) {
-    margin-bottom: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `
 
 export const WorkoutItem = styled.li`
   border: 1px solid #000;
   border-radius: 26px;
   padding: 15px;
-  margin-bottom: 12px;
-  text-align: center;
-  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
   cursor: pointer;
+
+  &:hover {
+    background: #580ea2;
+    color: #fff;
+  }
+
   ${(props) =>
     props.$active &&
     `
@@ -355,7 +323,8 @@ export const WorkoutItem = styled.li`
 `
 export const WorkoutName = styled.h3`
   font-size: 20px;
-  margin-bottom: 12px;
+  transition: 0.3s all;
+
   @media (max-width: 768px) {
     font-size: 16px;
     margin-bottom: 8px;
@@ -382,12 +351,31 @@ export const WorkoutImg = styled.img`
   }
 `
 
-export const WorkoutText = styled.p`
-  font-size: 16px;
-  @media (max-width: 768px) {
-    font-size: 14px;
+export const closeWindow = styled.img`
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  width: 15px;
+`
+export const viewAllCourses = styled.button`
+  margin-top: 30px;
+  width: fit-content;
+  border: 0;
+  border-radius: 46px;
+  padding: 12px 41px;
+  background-color: #580ea2;
+  color: #fff;
+  font-size: 18px;
+
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #3f007d;
   }
-  @media (max-width: 480px) {
-    font-size: 9px;
+  &:active {
+    background-color: #271a58;
+  }
+  &:disabled {
+    opacity: 0.5;
   }
 `
